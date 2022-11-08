@@ -33,7 +33,6 @@ namespace Filtr
             Intent it = new Intent(this, typeof(RegisterActivity));
             StartActivity(it);
         }
-
         private void SetupFonts()
         {
             #region Header, Button (Semi-Bold Poppins)
