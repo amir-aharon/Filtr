@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colCyan">#4ecdc4</color>
+    <color name="colRed">#ff6b6b</color>
+    <color name="colDark">#292f36</color>
+	<color name="colLight">#eeeeee</color>
+	<color name="colYellow">#ffe66d</color>
+</resources>

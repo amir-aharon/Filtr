@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/welcomebg"
+    android:orientation="vertical"
+    android:gravity="center_horizontal"
+    android:padding="0dp"
+    >
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:text="Welcome onboard!"
+        android:textSize="18dp"
+        android:textAlignment="center"
+        android:textColor="@color/colDark"
+        android:layout_marginTop="170dp"
+        android:id="@+id/tvRegisterPageHeader"
+        />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="22dp"
+        android:text="Let’s help you explore your creativity"
+        android:textSize="13dp"
+        android:textAlignment="center"
+        android:textColor="@color/colDark"
+        android:layout_marginTop="10dp"
+        android:id="@+id/tvRegisterPageSubHeader"
+        android:alpha=".75"
+        />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_marginTop="126dp"
+        android:layout_marginHorizontal="25dp"
+        android:background="@drawable/form_textfield"
+        android:hint="Enter your full name"
+        android:paddingLeft="33dp"
+        android:textAlignment="viewStart"
+        android:gravity="center"
+        android:textSize="13dp"
+        android:textColorHint="#404040"
+        android:id="@+id/etRegisterName"/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginHorizontal="25dp"
+        android:background="@drawable/form_textfield"
+        android:hint="Enter your email"
+        android:paddingLeft="33dp"
+        android:textAlignment="viewStart"
+        android:gravity="center"
+        android:textSize="13dp"
+        android:textColorHint="#404040"
+        android:id="@+id/etRegisterEmail"/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginHorizontal="25dp"
+        android:background="@drawable/form_textfield"
+        android:hint="Enter your password"
+        android:paddingLeft="33dp"
+        android:textAlignment="viewStart"
+        android:gravity="center"
+        android:textSize="13dp"
+        android:textColorHint="#404040"
+        android:id="@+id/etRegisterPass"/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginHorizontal="25dp"
+        android:background="@drawable/form_textfield"
+        android:hint="Confirm password"
+        android:paddingLeft="33dp"
+        android:textAlignment="viewStart"
+        android:gravity="center"
+        android:textSize="13dp"
+        android:textColorHint="#404040"
+        android:id="@+id/etRegisterConfirm"/>
+
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_marginTop="36dp"
+        android:layout_marginHorizontal="25dp"
+        android:background="@color/colRed"
+        android:text="Sign Up"
+        android:textAlignment="center"
+        android:gravity="center"
+        android:textSize="18dp"
+        android:textColor="#fff"
+        android:id="@+id/btnRegister"/>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="24dp"
+        android:orientation="horizontal"
+        android:layout_marginTop="14dp">
+    
+        <TextView
+             android:layout_width="wrap_content"
+             android:layout_height="24dp"
+            android:layout_gravity="center"
+            android:text="Already have an account?"
+            android:textSize="14sp"
+            android:textColor="#000"
+            android:alpha=".75"
+            android:layout_marginRight="6dp"
+            android:id="@+id/tvRegisterFooterText"
+            />
+        
+        <androidx.appcompat.widget.AppCompatButton
+             android:layout_width="wrap_content"
+             android:layout_height="24dp"
+            android:layout_gravity="center"
+            android:textAlignment="textStart"
+            android:text="Sign in"
+            android:textSize="14sp"
+            android:textColor="@color/colRed"
+            android:id="@+id/btnRegisterFooterLink"
+            />  
+
+    </LinearLayout>
+    
+</LinearLayout>

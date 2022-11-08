@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/welcomebg"
+    android:orientation="vertical"
+    android:gravity="center_horizontal"
+    >
+    <ImageView
+        android:layout_width="225dp"
+        android:layout_height="225dp"
+        android:layout_marginTop="195dp"
+        android:layout_marginLeft="10dp"
+        android:background="@drawable/landingpageart"
+    />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="27dp"
+        android:text="Explore photo editing with Filtr"
+        android:textSize="18dp"
+        android:textAlignment="center"
+        android:textColor="@color/colDark"
+        android:layout_marginTop="10dp"
+        android:id="@+id/tvLandingPageHeader"
+        />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="88dp"
+        android:text="Filtr is a photo editing app, where\nyou can apply many creative filters\non your photos, and share them\nacross our shared-by-users gallery."
+        android:textSize="13dp"
+        android:textAlignment="center"
+        android:textColor="@color/colDark"
+        android:layout_marginTop="20dp"
+        android:id="@+id/tvLandingPageParagraph"
+        android:alpha=".75"
+        />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_marginTop="159dp"
+        android:layout_marginHorizontal="25dp"
+        android:background="@color/colRed"
+        android:text="Get Started"
+        android:textAlignment="center"
+        android:gravity="center"
+        android:textSize="18dp"
+        android:textColor="#fff"
+        android:id="@+id/btnLandingPageGetStarted"/>
+</LinearLayout>
