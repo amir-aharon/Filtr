@@ -118,7 +118,7 @@
             android:textSize="14sp"
             android:textColor="#000"
             android:alpha=".75"
-            android:layout_marginRight="6dp"
+            android:layout_marginRight="-10dp"
             android:id="@+id/tvRegisterFooterText"
             />
         
@@ -126,9 +126,9 @@
              android:layout_width="wrap_content"
              android:layout_height="24dp"
             android:layout_gravity="center"
-            android:textAlignment="textStart"
             android:text="Sign in"
             android:textSize="14sp"
+            android:background="@android:color/transparent"
             android:textColor="@color/colRed"
             android:id="@+id/btnRegisterFooterLink"
             />  
