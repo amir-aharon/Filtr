@@ -16,17 +16,25 @@ namespace Filtr
     [Activity(Label = "LoginActivity")]
     public class LoginActivity : AppCompatActivity
     {
-        Button btnToRegister;
+        Button btnToRegister, btnLogin;
+        EditText etEmail, etPassword;
+        View p;
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
+            p = FindViewById<View>(Resource.Id.login_page);
 
             // Create your application here
             SetContentView(Resource.Layout.login_page);
-            SetupFonts();
+            
+            etEmail = p.FindViewById<EditText>(Resource.Id.etEmail);
+            etPassword = p.FindViewById<EditText>(Resource.Id.etPassword);
+            btnLogin = p.FindViewById<Button>(Resource.Id.btnLogin);
 
-            btnToRegister = FindViewById<Button>(Resource.Id.btnLoginFooterLink);
+            btnToRegister = p.FindViewById<Button>(Resource.Id.btnFooterLink);
             btnToRegister.Click += BtnToRegister_Click;
+
+            SetupFonts();
         }
 
         private void BtnToRegister_Click(object sender, EventArgs e)
@@ -39,20 +47,18 @@ namespace Filtr
         {
             #region Header, Button, Footer link (Semi-Bold Poppins)
             Typeface tf = Typeface.CreateFromAsset(Assets, "Poppins-SemiBold.ttf");
-            TextView text = (TextView)FindViewById(Resource.Id.tvLoginPageHeader);
-            Button btn = (Button)FindViewById(Resource.Id.btnLogin);
+
+            TextView text = (TextView)FindViewById(Resource.Id.tvHeader);
             text.SetTypeface(tf, TypefaceStyle.Normal);
-            btn.SetTypeface(tf, TypefaceStyle.Normal);
-            btn = (Button)FindViewById(Resource.Id.btnLoginFooterLink);
-            btn.SetTypeface(tf, TypefaceStyle.Normal);
+            btnLogin.SetTypeface(tf, TypefaceStyle.Normal);
+            btnToRegister.SetTypeface(tf, TypefaceStyle.Normal);
             #endregion
             #region textfields, subhead, Footer text (Regular Poppins)
             tf = Typeface.CreateFromAsset(Assets, "Poppins-Regular.ttf");
-            EditText et = (EditText)FindViewById(Resource.Id.etLoginEmail);
-            et.SetTypeface(tf, TypefaceStyle.Normal);
-            et = (EditText)FindViewById(Resource.Id.etLoginPass);
-            et.SetTypeface(tf, TypefaceStyle.Normal);
-            text = (TextView)FindViewById(Resource.Id.tvLoginFooterText);
+
+            etPassword.SetTypeface(tf, TypefaceStyle.Normal);
+            etEmail.SetTypeface(tf, TypefaceStyle.Normal);
+            text = (TextView)p.FindViewById(Resource.Id.tvFooterText);
             text.SetTypeface(tf, TypefaceStyle.Normal);
             #endregion
         }

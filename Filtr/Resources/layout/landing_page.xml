@@ -8,6 +8,7 @@
     android:background="@drawable/welcomebg"
     android:orientation="vertical"
     android:gravity="center_horizontal"
+    android:id="@+id/landing_page"
     >
 
     <ImageView
@@ -26,7 +27,7 @@
         android:textAlignment="center"
         android:textColor="@color/colDark"
         android:layout_marginTop="10dp"
-        android:id="@+id/tvLandingPageHeader"
+        android:id="@+id/tvHeader"
         />
 
     <TextView
@@ -37,7 +38,7 @@
         android:textAlignment="center"
         android:textColor="@color/colDark"
         android:layout_marginTop="20dp"
-        android:id="@+id/tvLandingPageParagraph"
+        android:id="@+id/tvParagraph"
         android:alpha=".75"
         />
 
@@ -52,5 +53,5 @@
         android:gravity="center"
         android:textSize="18dp"
         android:textColor="#fff"
-        android:id="@+id/btnLandingPageGetStarted"/>
+        android:id="@+id/btnGetStarted"/>
 </LinearLayout>

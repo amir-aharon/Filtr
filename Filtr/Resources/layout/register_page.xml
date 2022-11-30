@@ -9,6 +9,7 @@
     android:orientation="vertical"
     android:gravity="center_horizontal"
     android:padding="0dp"
+    android:id="@+id/register_page"
     >
 
     <TextView
@@ -19,7 +20,7 @@
         android:textAlignment="center"
         android:textColor="@color/colDark"
         android:layout_marginTop="170dp"
-        android:id="@+id/tvRegisterPageHeader"
+        android:id="@+id/tvHeader"
         />
 
     <TextView
@@ -30,7 +31,7 @@
         android:textAlignment="center"
         android:textColor="@color/colDark"
         android:layout_marginTop="10dp"
-        android:id="@+id/tvRegisterPageSubHeader"
+        android:id="@+id/tvSubHeader"
         android:alpha=".75"
         />
 
@@ -43,10 +44,12 @@
         android:hint="Enter your full name"
         android:paddingLeft="33dp"
         android:textAlignment="viewStart"
+        android:inputType="textPersonName"
+        android:maxLines="1"
         android:gravity="center"
         android:textSize="13dp"
         android:textColorHint="#404040"
-        android:id="@+id/etRegisterName"/>
+        android:id="@+id/etName"/>
 
     <EditText
         android:layout_width="match_parent"
@@ -56,11 +59,12 @@
         android:background="@drawable/form_textfield"
         android:hint="Enter your email"
         android:paddingLeft="33dp"
+        android:inputType="textEmailAddress"
         android:textAlignment="viewStart"
         android:gravity="center"
         android:textSize="13dp"
         android:textColorHint="#404040"
-        android:id="@+id/etRegisterEmail"/>
+        android:id="@+id/etEmail"/>
 
     <EditText
         android:layout_width="match_parent"
@@ -72,9 +76,10 @@
         android:paddingLeft="33dp"
         android:textAlignment="viewStart"
         android:gravity="center"
+        android:inputType="textPassword"
         android:textSize="13dp"
         android:textColorHint="#404040"
-        android:id="@+id/etRegisterPass"/>
+        android:id="@+id/etPassword"/>
 
     <EditText
         android:layout_width="match_parent"
@@ -84,11 +89,12 @@
         android:background="@drawable/form_textfield"
         android:hint="Confirm password"
         android:paddingLeft="33dp"
+        android:inputType="textPassword"
         android:textAlignment="viewStart"
         android:gravity="center"
         android:textSize="13dp"
         android:textColorHint="#404040"
-        android:id="@+id/etRegisterConfirm"/>
+        android:id="@+id/etConfirm"/>
 
 
     <androidx.appcompat.widget.AppCompatButton
@@ -119,7 +125,7 @@
             android:textColor="#000"
             android:alpha=".75"
             android:layout_marginRight="-10dp"
-            android:id="@+id/tvRegisterFooterText"
+            android:id="@+id/tvFooter"
             />
         
         <androidx.appcompat.widget.AppCompatButton
@@ -130,7 +136,7 @@
             android:textSize="14sp"
             android:background="@android:color/transparent"
             android:textColor="@color/colRed"
-            android:id="@+id/btnRegisterFooterLink"
+            android:id="@+id/btnToLogin"
             />  
 
     </LinearLayout>

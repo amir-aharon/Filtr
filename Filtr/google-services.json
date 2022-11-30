@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "881814132225",
+    "firebase_url": "https://filtr-87054-default-rtdb.firebaseio.com",
+    "project_id": "filtr-87054",
+    "storage_bucket": "filtr-87054.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:881814132225:android:d9a7faaef43c7b217d9200",
+        "android_client_info": {
+          "package_name": "com.companyname.filtr"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "881814132225-rgiluqcjlmoejdvvhaq298s4k012e8jh.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAF1Z62LMGzOYTIzNARCwHem_BQrfmntFE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "881814132225-rgiluqcjlmoejdvvhaq298s4k012e8jh.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
