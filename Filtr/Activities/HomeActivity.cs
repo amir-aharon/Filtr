@@ -17,6 +17,10 @@ namespace Filtr
     {
         LinearLayout navHome, navSearch;
         View p;
+        public override void OnBackPressed()
+        {
+            return;
+        }
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);

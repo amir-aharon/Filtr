@@ -14,7 +14,6 @@ namespace Filtr
     [Activity(Label = "@string/app_name", Theme = "@style/AppTheme", MainLauncher = true)]
     public class MainActivity : AppCompatActivity
     {
-        public static FirebaseFirestore DB;
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);  
@@ -23,7 +22,7 @@ namespace Filtr
             // Loading Screen
             SetContentView(Resource.Layout.loading);
 
-            DB = GetDataBase();
+            Live.db = GetDataBase();
 
             // Move to starting page
             Intent it = new Intent(this, typeof(LandingPageActivity));
