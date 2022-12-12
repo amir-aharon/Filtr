@@ -15,8 +15,10 @@ namespace Filtr
     [Activity(Label = "HomeActivity")]
     public class HomeActivity : Activity
     {
-        LinearLayout navHome, navSearch;
+        LinearLayout navHome, navSearch, navAccount, navLiked;
         View p;
+        ListView lv;
+        PostAdapter adapter;
         public override void OnBackPressed()
         {
             return;
@@ -31,25 +33,44 @@ namespace Filtr
             p = FindViewById(Resource.Id.home_page);
             SetNavbarButtons();
 
+            PostAdapter.type = "Home";
+            lv = FindViewById<ListView>(Resource.Id.lv);
+
+            ListViewExample();
+
             SetupFonts();
+        }
+        public void ListViewExample()
+        {
+            User u1 = new User("1", "aaa@aaa.aaa", "aaaaaaaa1", "Amir", "Aharon");
+            Filter f1 = PixelFilter.filter;
+
+            List<Post> posts = new List<Post>();
+            posts.Add(new Post(u1, f1));
+            posts.Add(new Post(u1));
+            posts.Add(new Post(u1, f1));
+
+            adapter = new PostAdapter(this, posts);
+            lv.Adapter = adapter;
         }
         private void SetNavbarButtons()
         {
             navHome = (LinearLayout)p.FindViewById(Resource.Id.navHome);
-            navHome.Click += NavHome_Click;
             navSearch = (LinearLayout)p.FindViewById(Resource.Id.navSearch);
             navSearch.Click += NavSearch_Click;
+            navAccount = (LinearLayout)p.FindViewById(Resource.Id.navAccount);
+            navAccount.Click += NavAccount_Click;
+            navLiked = (LinearLayout)p.FindViewById(Resource.Id.navLiked);
+        }
+
+        private void NavAccount_Click(object sender, EventArgs e)
+        {
+            throw new NotImplementedException();
         }
 
         private void NavSearch_Click(object sender, EventArgs e)
         {
-            Intent it = new Intent(this, typeof(SearchActivity));
-            StartActivity(it);
-        }
-
-        private void NavHome_Click(object sender, EventArgs e)
-        {
-            return;
+            NavbarHelper.SearchButton(this);
         }
         private void SetupFonts()
         {

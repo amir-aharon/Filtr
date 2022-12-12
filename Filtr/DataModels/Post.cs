@@ -18,6 +18,18 @@ namespace Filtr
         public Bitmap content { get; private set; } // post's image
         public Filter filter { get; private set; } // post's implemented filter
         public List<User> likedBy { get; private set; } // list of all the users who liked this post
+        public Post(User u, Filter f)
+        {
+            creator = u;
+            filter = f;
+            content = null;
+        }
+        public Post(User u)
+        {
+            creator = u;
+            filter = null;
+            content = null;
+        }
 
     }
 }
