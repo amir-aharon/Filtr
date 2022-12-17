@@ -14,22 +14,27 @@ namespace Filtr
     public class Post : IDatabaseObject
     {
         public string id { get; private set; } // IDatabaseObject implementation
-        public User creator { get; private set; } // post's creator
-        public Bitmap content { get; private set; } // post's image
-        public Filter filter { get; private set; } // post's implemented filter
-        public List<User> likedBy { get; private set; } // list of all the users who liked this post
-        public Post(User u, Filter f)
+        public string creator { get; private set; } // post's creator
+        public string cFname { get; private set; } // post's creator
+        public string cLname { get; private set; } // post's creator
+        public string content { get; private set; } // post's image
+        public string filter { get; private set; } // post's implemented filter
+
+        public Post(string id, string creator, string f)
         {
-            creator = u;
+            this.id = id;
+            this.creator = creator;
             filter = f;
             content = null;
         }
-        public Post(User u)
+        public Post(string id, string creator, string content, string filter, string fname, string lname)
         {
-            creator = u;
-            filter = null;
-            content = null;
+            this.id = id;
+            this.creator = creator;
+            this.filter = filter;
+            this.content = content;
+            cFname = fname;
+            cLname = lname;
         }
-
     }
 }

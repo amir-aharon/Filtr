@@ -18,8 +18,8 @@ namespace Filtr
         public string Lname { get; private set; } // user's last name
         public string password { get; private set; } // user's password
         public string email { get; private set; } // user's email address
-        public List<Post> posts { get; private set; } // user's posts list
-        public List<Post> likedPosts { get; private set; } // list of posts that the uaer liked
+        //public List<Post> posts { get; private set; } // user's posts list
+        //public List<Post> likedPosts { get; private set; } // list of posts that the uaer liked
         public User (string id, string email, string password, string Fname, string Lname)
         {
             this.id = id;
@@ -27,8 +27,8 @@ namespace Filtr
             this.password = password;
             this.Fname = Fname;
             this.Lname = Lname;
-            posts = new List<Post> ();
-            likedPosts = new List<Post> ();
+            //posts = new List<Post> ();
+            //likedPosts = new List<Post> ();
         } // full constructor
     }
 }

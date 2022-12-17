@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="364dp"
+    android:layout_height="610dp"
+    android:gravity="center"
+    android:background="#292F36">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:id="@+id/btnByUser"
+        >
+    <ImageView
+          android:layout_width="164dp"
+          android:layout_height="164dp"
+        android:background="@drawable/account"
+        android:backgroundTintMode="src_over"
+        android:backgroundTint="#4ECDC4"
+        android:layout_marginBottom="30dp"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="16sp"
+    android:text="Search by user"
+
+        android:textColor="#4ECDC4"/>
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="16sp"
+        android:text="or"
+        android:layout_marginBottom="40dp"
+        android:layout_marginVertical="40dp"
+    android:textColor="#fff"/>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:id="@+id/btnByFilter"
+        android:gravity="center"
+        android:layout_marginBottom="30dp">
+    <ImageView
+          android:layout_width="164dp"
+          android:layout_height="164dp"
+        android:background="@drawable/magic"
+            android:backgroundTintMode="src_over"
+                    android:layout_marginBottom="30dp"
+
+        android:backgroundTint="#FFE66D"
+        />
+        <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="16sp"
+    android:text="Search by filter"
+        android:textColor="#FFE66D"/>
+    </LinearLayout>
+
+</LinearLayout>

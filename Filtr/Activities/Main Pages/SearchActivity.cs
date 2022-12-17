@@ -15,7 +15,7 @@ namespace Filtr
     [Activity(Label = "SearchActivity")]
     public class SearchActivity : Activity
     {
-        LinearLayout navHome, navSearch;
+        LinearLayout navHome, navSearch, navAccount, navLiked;
         View p;
         protected override void OnCreate(Bundle savedInstanceState)
         {
@@ -23,22 +23,24 @@ namespace Filtr
             SetContentView(Resource.Layout.search_page);
 
             p = FindViewById(Resource.Id.search_page);
-            navHome = (LinearLayout)p.FindViewById(Resource.Id.navHome);
-            navHome.Click += NavHome_Click; ;
-            navSearch = (LinearLayout)p.FindViewById(Resource.Id.navSearch);
-            navSearch.Click += NavSearch_Click; ;
-
+            SetNavbarButtons();
             SetupFonts();
         }
-
+        private void SetNavbarButtons()
+        {
+            navHome = (LinearLayout)p.FindViewById(Resource.Id.navHome);
+            navHome.Click += NavHome_Click;
+            navAccount = (LinearLayout)p.FindViewById(Resource.Id.navAccount);
+            navAccount.Click += NavAccount_Click;
+            navLiked = (LinearLayout)p.FindViewById(Resource.Id.navLiked);
+        }
+        private void NavAccount_Click(object sender, EventArgs e)
+        {
+            NavbarHelper.AccountButton(this);
+        }
         private void NavHome_Click(object sender, EventArgs e)
         {
-            Intent it = new Intent(this, typeof(HomeActivity));
-            StartActivity(it);
-        }
-        private void NavSearch_Click(object sender, EventArgs e)
-        {
-            return;
+            NavbarHelper.HomeButton(this);
         }
         private void SetupFonts()
         {

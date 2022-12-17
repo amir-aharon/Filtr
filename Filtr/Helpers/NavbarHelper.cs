@@ -28,10 +28,10 @@ namespace Filtr
         //    Intent intent = new Intent(ctx, typeof(Lik));
         //    ctx.StartActivity(intent);
         //}
-        //public static void AccountButton(Context ctx)
-        //{
-        //    Intent intent = new Intent(ctx, typeof(SearchActivity));
-        //    ctx.StartActivity(intent);
-        //}
+        public static void AccountButton(Context ctx)
+        {
+            Intent intent = new Intent(ctx, typeof(AccountActivity));
+            ctx.StartActivity(intent);
+        }
     }
 }

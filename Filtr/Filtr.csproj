@@ -70,6 +70,7 @@
     <Reference Include="System.Numerics.Vectors" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Activities\Main Pages\AccountActivity.cs" />
     <Compile Include="DataModels\Filter.cs" />
     <Compile Include="DataModels\IDatabaseObject.cs" />
     <Compile Include="DataModels\PixelFilter.cs" />
@@ -82,6 +83,7 @@
     <Compile Include="Activities\MainActivity.cs" />
     <Compile Include="Activities\Entrance\RegisterActivity.cs" />
     <Compile Include="Helpers\AnimaitonHelper.cs" />
+    <Compile Include="Helpers\ImageHelper.cs" />
     <Compile Include="Helpers\NavbarHelper.cs" />
     <Compile Include="PostAdapter.cs" />
     <Compile Include="Resources\Resource.designer.cs" />
@@ -197,9 +199,6 @@
     <AndroidResource Include="Resources\drawable\heart.png" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\drawable\account.png" />
-  </ItemGroup>
-  <ItemGroup>
     <AndroidResource Include="Resources\drawable\home.png" />
   </ItemGroup>
   <ItemGroup>
@@ -257,6 +256,32 @@
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\layout\post_component_self.xml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\layout\search_options_dialog.xml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\magic.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\account.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\layout\filters_menu_dialog.xml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\menu_button.xml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\layout\account_page.xml">
       <SubType>Designer</SubType>
     </AndroidResource>
   </ItemGroup>
