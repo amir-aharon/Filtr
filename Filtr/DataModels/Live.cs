@@ -1,5 +1,6 @@
 ﻿using Android.App;
 using Android.Content;
+using Android.Graphics;
 using Android.OS;
 using Android.Runtime;
 using Android.Views;
@@ -16,5 +17,6 @@ namespace Filtr
     {
         public static FirebaseFirestore db;
         public static User user;
+        public static Bitmap editedBitmap;
     }
 }

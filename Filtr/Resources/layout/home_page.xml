@@ -11,7 +11,7 @@
     <ListView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#444"
+        android:background="#eee"
         android:id="@+id/lv"
         android:paddingBottom="78dp"/>
 
@@ -143,6 +143,7 @@
         android:layout_centerHorizontal="true"
         android:text="＋"
         android:gravity="center"
+                android:id="@+id/btnPlus"
 
         android:textSize="40sp"
         android:textColor="#fff"

@@ -19,14 +19,6 @@ namespace Filtr
         public string cLname { get; private set; } // post's creator
         public string content { get; private set; } // post's image
         public string filter { get; private set; } // post's implemented filter
-
-        public Post(string id, string creator, string f)
-        {
-            this.id = id;
-            this.creator = creator;
-            filter = f;
-            content = null;
-        }
         public Post(string id, string creator, string content, string filter, string fname, string lname)
         {
             this.id = id;

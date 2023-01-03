@@ -1,0 +1,43 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<!--For all properties see: https://aka.ms/android-menu-resource-->
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+	<item android:id="@+id/action_nofilter"
+		   android:showAsAction="always"
+		  android:text="NoFilter"
+		   android:actionViewClass="android.widget.SearchView"/>
+
+	<item android:id="@+id/action_monochrome"
+         android:showAsAction="always"
+        android:text="Monochrome"
+         android:actionViewClass="android.widget.SearchView"/>
+
+	<item android:id="@+id/action_pixelate"
+         android:showAsAction="always"
+        android:text="Pixelate"
+         android:actionViewClass="android.widget.SearchView"/>
+
+</menu>
+
+<!-- Code to implement into Activity:
+
+Android.Widget.SearchView searchView;
+public override bool OnCreateOptionsMenu(IMenu menu)
+{
+  this.MenuInflater.Inflate(Resource.Menu.filters_menu, menu);
+
+  var searchItem = menu.FindItem(Resource.Id.action_search);
+
+  searchView = searchItem.ActionProvider.JavaCast<Android.Widget.SearchView>();
+
+  searchView.QueryTextSubmit += (sender, args) =>
+  {
+    Toast.MakeText(this, "You searched: " + args.Query, ToastLength.Short).Show();
+
+  };
+
+
+  return base.OnCreateOptionsMenu(menu);
+}
+
+-->

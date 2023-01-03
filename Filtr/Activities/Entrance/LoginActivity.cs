@@ -73,6 +73,7 @@ namespace Filtr
         private void BtnToRegister_Click(object sender, EventArgs e)
         {
             Intent it = new Intent(this, typeof(RegisterActivity));
+            it.AddFlags(ActivityFlags.NoAnimation);
             StartActivity(it);
         }
         private void BtnLogin_Click(object sender, EventArgs e)

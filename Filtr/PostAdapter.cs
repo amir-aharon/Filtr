@@ -71,7 +71,55 @@ namespace Filtr
                 {
                     tvUser.Text = "By " + temp.cFname + " " + temp.cLname;
                     tvFilter.Text = "#" + temp.filter;
-                    
+
+                    tvFilter.Click += (object sender, EventArgs e) =>
+                    {
+                        QueryFilter(context, temp.filter);
+                    };
+
+                    queryType = "SetupHome";
+
+                    likeIconsDisplays.Add(fullIcon);
+                    Live.db.Collection("posts").Document(temp.id).Get().AddOnSuccessListener(this);
+
+                    if (temp.content != null)
+                    {
+                        ivContent.SetImageBitmap(ImageHelper.Base64ToBitmap(temp.content));
+                    }
+
+                    btnLike.Click += (object sender, EventArgs e) =>
+                    {
+                        ToggleLike(sender, temp);
+                    };
+                }
+                return view;
+            }
+            else if (type.Equals("Liked"))
+            {
+                #region Connect Views
+                LayoutInflater layoutInflater = ((LikedActvity)context).LayoutInflater;
+                View view = layoutInflater.Inflate(Resource.Layout.post_component_full, parent, false);
+                SetupFonts((LikedActvity)context, view);
+                TextView tvUser = (TextView)view.FindViewById(Resource.Id.tvUser);
+                TextView tvFilter = (TextView)view.FindViewById(Resource.Id.tvFilter);
+                FrameLayout btnLike = (FrameLayout)view.FindViewById(Resource.Id.btnLike);
+                fullIcon = (ImageView)view.FindViewById(Resource.Id.fullIcon);
+                ImageView emptyIcon = (ImageView)view.FindViewById(Resource.Id.emptyIcon);
+                ImageView ivContent = (ImageView)view.FindViewById(Resource.Id.ivContent);
+                #endregion
+
+                Post temp = objects[position];
+
+                if (temp != null)
+                {
+                    tvUser.Text = "By " + temp.cFname + " " + temp.cLname;
+                    tvFilter.Text = "#" + temp.filter;
+
+                    tvFilter.Click += (object sender, EventArgs e) =>
+                    {
+                        QueryFilter(context, temp.filter);
+                    };
+
                     queryType = "SetupHome";
 
                     likeIconsDisplays.Add(fullIcon);
@@ -103,8 +151,13 @@ namespace Filtr
                 Post temp = objects[position];
                 if (temp != null)
                 {
-                    tvFilter.Text = "#" + (temp.filter != null ? PixelFilter.filter.name : "nofilter");
+                    tvFilter.Text = "#" + temp.filter;
                     //likeCount.Text = "" + temp.likedBy.Count + " likes"; 
+
+                    tvFilter.Click += (object sender, EventArgs e) =>
+                    {
+                        QueryFilter(context, temp.filter);
+                    };
 
                     queryType = "SetupAccount";
 
@@ -118,9 +171,53 @@ namespace Filtr
                 }
                 return view;
             }
+            else if (type.Equals("Search_Filter"))
+            {
+                #region Connect Views
+                LayoutInflater layoutInflater = ((SearchActivity)context).LayoutInflater;
+                View view = layoutInflater.Inflate(Resource.Layout.post_component_with_user, parent, false);
+                SetupFonts((SearchActivity)context, view);
+                TextView tvUser = (TextView)view.FindViewById(Resource.Id.tvUser);
+                FrameLayout btnLike = (FrameLayout)view.FindViewById(Resource.Id.btnLike);
+                fullIcon = (ImageView)view.FindViewById(Resource.Id.fullIcon);
+                ImageView emptyIcon = (ImageView)view.FindViewById(Resource.Id.emptyIcon);
+                ImageView ivContent = (ImageView)view.FindViewById(Resource.Id.ivContent);
+                #endregion
+
+                Post temp = objects[position];
+
+                if (temp != null)
+                {
+                    tvUser.Text = "By " + temp.cFname + " " + temp.cLname;
+
+                    queryType = "SetupHome";
+
+                    likeIconsDisplays.Add(fullIcon);
+                    Live.db.Collection("posts").Document(temp.id).Get().AddOnSuccessListener(this);
+
+                    if (temp.content != null)
+                    {
+                        ivContent.SetImageBitmap(ImageHelper.Base64ToBitmap(temp.content));
+                    }
+
+                    btnLike.Click += (object sender, EventArgs e) =>
+                    {
+                        ToggleLike(sender, temp);
+                    };
+                }
+                return view;
+            }
 
             return null;
         }
+
+        private void QueryFilter(Context context, string filter)
+        {
+            Intent it = new Intent(context, typeof(SearchActivity));
+            it.PutExtra("filterQuery", filter);
+            context.StartActivity(it);
+        }
+
         private void SetupFonts(Context ctx, View view)
         {
             Typeface tf = Typeface.CreateFromAsset(ctx.Assets, "Poppins-Regular.ttf");
@@ -160,8 +257,6 @@ namespace Filtr
 
             JavaList likedBy = (JavaList)snapshot.Get("likedBy");
 
-            Toast.MakeText(context, queryType, ToastLength.Short).Show();
-
             if (queryType.Equals("Like"))
             {
                 likedBy.Add(Live.user.id);
@@ -190,7 +285,6 @@ namespace Filtr
                     {
                         for (int i = 0; i < likesCounter.Count; i++)
                         {
-                            //Toast.MakeText(context, "LikesCounter: " + likesCounter.Count + "\nLikeIcons: " + likeIcons.Count, ToastLength.Short).Show();
                             if (likeIconsDisplays[i] != null)
                             {
                                 likeIconsDisplays[i].Visibility =

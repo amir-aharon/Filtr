@@ -38,7 +38,7 @@
             android:textSize="20sp"
                 android:layout_marginTop="3dp"
             android:text="By Fname Lname"
-                android:id="@+id/btnUser"
+                android:id="@+id/tvUser"
             android:textColor="#4ECDC4"
 />
 
@@ -53,18 +53,23 @@
             android:layout_width="43dp"
             android:layout_height="40dp"
             android:layout_marginBottom="5dp"
-                android:id="@+id/likeIcon"
+                android:id="@+id/fullIcon"
                 android:visibility="invisible"
             android:background="@drawable/like_full"/>
             <ImageView
             android:layout_width="43dp"
             android:layout_height="40dp"
             android:layout_marginBottom="5dp"
-                android:id="@+id/fullIcon"
+                android:id="@id/emptyIcon"
             android:background="@drawable/like_empty"/>
         </FrameLayout>
+
         
 
     </RelativeLayout>
+    <LinearLayout
+        android:layout_width="400dp"
+        android:layout_height="2dp"
+        android:background="@color/colRed"/>
 
 </LinearLayout>

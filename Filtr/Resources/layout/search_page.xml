@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
@@ -8,10 +9,48 @@
     android:id="@+id/search_page"
     >
     <com.google.android.flexbox.FlexboxLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:orientation="vertical"
+            android:id="@+id/topBar"
+            android:background="@color/colDark"
+            app:flexDirection="row"
+            app:alignItems="center"
+            android:visibility="visible"
+            app:justifyContent="space_between"
+            android:paddingHorizontal="20dp"
+            >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Search"
+                android:textColor="#fff"
+                android:id="@+id/tvTopBar"
+                android:translationY="7dp"
+                android:editable="false"
+                android:background="@color/mtrl_btn_transparent_bg_color"
+                android:textSize="18sp"
+                android:layout_marginLeft="7dp"/>
+
+        </com.google.android.flexbox.FlexboxLayout>
+    
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="78dp"
+        android:background="#eee"
+        android:layout_marginTop="50dp"
+        android:id="@+id/lv"
+       />
+
+    
+
+    <com.google.android.flexbox.FlexboxLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:flexDirection="column_reverse"
         app:alignItems="center"
+        android:id="@+id/llEntrance"
         android:background="#d9d9d9"
         android:paddingBottom="78dp"
         >
@@ -19,35 +58,40 @@
             android:layout_width="187dp"
             android:layout_height="371dp"
             android:background="@drawable/searchpageart"
-        android:layout_marginBottom="132dp"
+            android:layout_marginBottom="132dp"
             android:layout_marginTop="104dp"/>
 
         <com.google.android.flexbox.FlexboxLayout
             android:layout_width="match_parent"
             android:layout_height="72dp"
             android:layout_marginHorizontal="36dp"
+            android:orientation="vertical"
+            android:id="@+id/btnSearch"
             android:background="@drawable/top_bar"
             app:flexDirection="row"
             app:alignItems="center"
             app:justifyContent="space_between"
             android:paddingHorizontal="24dp"
             >
-            <TextView
+            <EditText
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Search"
                 android:textColor="#fff"
                 android:id="@+id/tvSearchBar"
+                android:editable="false"
+                android:background="@color/mtrl_btn_transparent_bg_color"
                 android:textSize="18sp"
                 android:layout_marginLeft="7dp"/>
             <ImageView
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:background="@drawable/search"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:background="@drawable/search"
                 android:backgroundTint="#fff"/>
         </com.google.android.flexbox.FlexboxLayout>
 
     </com.google.android.flexbox.FlexboxLayout>
+
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -66,10 +110,10 @@
             android:orientation="vertical"
             android:id="@+id/navHome">
 
-        <ImageView
-            android:layout_width="24dp"
-            android:layout_height="27dp"
-            android:background="@drawable/home"
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="27dp"
+                android:background="@drawable/home"
                 android:layout_marginBottom="1dp"
                 android:backgroundTint="#8B8E92"
             />
@@ -83,7 +127,7 @@
                 android:layout_marginTop="2dp"
                 />
         </LinearLayout>
-            
+
         <LinearLayout
             android:layout_width="50dp"
             android:layout_height="wrap_content"
@@ -91,24 +135,22 @@
             android:gravity="center"
             android:id="@id/navSearch"
             android:orientation="vertical">
-        <ImageView
+            <ImageView
                 android:layout_marginTop="3dp"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
                 android:id="@+id/search"
-            android:background="@drawable/search"
+                android:background="@drawable/search"
                 android:layout_marginBottom="1dp"
             />
-        <TextView
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Search"
                 android:textSize="12dp"
                 android:textColor="#000"
                 android:layout_marginTop="2dp"
-                                android:id="@+id/searchText"
-                />
-                
+                android:id="@+id/searchText"
                 />
         </LinearLayout>
 
@@ -120,11 +162,11 @@
             android:id="@id/navLiked"
             android:gravity="center"
             android:orientation="vertical">
-        <ImageView
-            android:layout_width="24dp"
+            <ImageView
+                android:layout_width="24dp"
                 android:layout_marginTop="4dp"
-            android:layout_height="22dp"
-            android:background="@drawable/heart"
+                android:layout_height="22dp"
+                android:background="@drawable/heart"
                 android:backgroundTint="#8B8E92"
                 android:layout_marginBottom="1dp"
             />
@@ -135,7 +177,7 @@
                 android:textSize="12dp"
                 android:textColor="#8B8E92"
                 android:layout_marginTop="2dp"
-                                android:id="@+id/likedText"
+                android:id="@+id/likedText"
                 />
         </LinearLayout>
 
@@ -144,16 +186,16 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="28dp"
             android:layout_marginBottom="1dp"
-            android:layout_marginTop="3dp"            
+            android:layout_marginTop="3dp"
             android:gravity="center"
             android:id="@id/navAccount"
             android:orientation="vertical"
             >
-        <ImageView
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:background="@drawable/account"
-            android:backgroundTint="#8B8E92"
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:background="@drawable/account"
+                android:backgroundTint="#8B8E92"
             />
             <TextView
                 android:layout_width="wrap_content"
@@ -162,12 +204,12 @@
                 android:textSize="12dp"
                 android:textColor="#8B8E92"
                 android:layout_marginTop="2dp"
-                                android:id="@+id/accountText"
+                android:id="@+id/accountText"
                 />
         </LinearLayout>
 
     </LinearLayout>
-    
+
     <Button
         android:layout_width="80dp"
         android:layout_height="80dp"
@@ -176,10 +218,11 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:text="＋"
+        android:id="@+id/btnPlus"
         android:gravity="center"
-
         android:textSize="40sp"
         android:textColor="#fff"
             />
-    
+
 </RelativeLayout>
+

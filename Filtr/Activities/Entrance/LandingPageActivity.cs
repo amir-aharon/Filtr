@@ -30,50 +30,14 @@ namespace Filtr
             p = FindViewById<View>(Resource.Id.landing_page);
 
             btnStart = p.FindViewById<Button>(Resource.Id.btnGetStarted);
-            anim = AnimationUtils.LoadAnimation(this, Resource.Animation.like_anim);
             btnStart.Click += BtnStart_Click;
-
-            empty = p.FindViewById<ImageView>(Resource.Id.empty);
-            full = p.FindViewById<ImageView>(Resource.Id.full);
-            frame = p.FindViewById<FrameLayout>(Resource.Id.frame);
-
-            full.ScaleX = 0;
-            full.ScaleY = 0;
-            full.Visibility = ViewStates.Invisible;
-
-            frame.Click += Frame_Click;
-
-            //empty.Click += Empty_Click;
-            //full.Click += Full_Click;
 
             SetupFonts();
         }
-
-        private void Frame_Click(object sender, EventArgs e)
-        {
-            if (full.Visibility == ViewStates.Visible)
-                AnimaitonHelper.ScaleOut(this, full);
-            else
-                AnimaitonHelper.ScaleIn(this, full);
-        }
-
-        private void Full_Click(object sender, EventArgs e)
-        {
-            Toast.MakeText(this, "Full Clicked", ToastLength.Short).Show();
-            
-            //full.Visibility = ViewStates.Invisible;
-
-        }
-
-        private void Empty_Click(object sender, EventArgs e)
-        {
-            Toast.MakeText(this, "Empty Clicked", ToastLength.Short).Show();
-            
-        }
-
         private void BtnStart_Click(object sender, EventArgs e)
         {
             Intent it = new Intent(this, typeof(RegisterActivity));
+            it.AddFlags(ActivityFlags.NoAnimation);
             StartActivity(it);
         }
         private void SetupFonts()

@@ -25,7 +25,7 @@ namespace Filtr
             Live.db = GetDataBase();
 
             // Move to starting page
-            Intent it = new Intent(this, typeof(HomeActivity));
+            Intent it = new Intent(this, typeof(LandingPageActivity));
             //Intent it = new Intent(this, typeof(HomeActivity));
             StartActivity(it);
         }

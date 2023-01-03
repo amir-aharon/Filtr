@@ -87,6 +87,7 @@ namespace Filtr
         private void BtnToLogin_Click(object sender, EventArgs e) // sends user to login page
         {
             Intent it = new Intent(this, typeof(LoginActivity));
+            it.AddFlags(ActivityFlags.NoAnimation);
             StartActivity(it);
         }
         private void BtnRegister_Click(object sender, EventArgs e)
@@ -186,12 +187,6 @@ namespace Filtr
             if (email.EndsWith("."))
             {
                 return false;
-                // TODO: email validation
-                // only one @
-                // from letters only english
-                // before and after @:
-                //  not ending or beginning with .,
-                //
             }
 
             // utilize email validation provided by .NET

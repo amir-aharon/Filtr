@@ -14,11 +14,10 @@ using System.Text;
 
 namespace Filtr
 {
-    [Activity(Label = "AccountActivity")]
-    public class AccountActivity : Activity, IOnSuccessListener
+    [Activity(Label = "LikedActivity")]
+    public class LikedActvity : Activity, IOnSuccessListener
     {
-        #region setup
-        LinearLayout navHome, navSearch, navLiked;
+        LinearLayout navHome, navSearch, navAccount, navLiked;
         View p;
         ListView lv;
         PostAdapter adapter;
@@ -29,40 +28,63 @@ namespace Filtr
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
-            SetContentView(Resource.Layout.account_page);
+            SetContentView(Resource.Layout.liked_page);
 
             // Create your application here
 
-            p = FindViewById(Resource.Id.account_page);
+            p = FindViewById(Resource.Id.liked_page);
             SetNavbarButtons();
-            
-            PostAdapter.type = "Account";
+
+            PostAdapter.type = "Liked";
             lv = p.FindViewById<ListView>(Resource.Id.lv);
 
-            ListViewExampleAsync();
+            ListViewExample();
 
             SetupFonts();
         }
+        public void ListViewExample()
+        {
+            User u1 = new User("1", "aaa@aaa.aaa", "aaaaaaaa1", "Amir", "Aharon");
+            Filter f1 = PixelFilter.filter;
 
-        
+            //posts.Add(new Post("HiEnRTD77d12c3j74m5D", u1, f1));
+            //posts.Add(new Post("HiEnRTD77d12c3j74m5D", u1));
+            //posts.Add(new Post("HiEnRTD77d12c3j74m5D", u1, f1));
+
+            Live.db.Collection("posts").WhereArrayContains("likedBy", Live.user.id).Get().AddOnSuccessListener(this);
+
+
+            //adapter = new PostAdapter(this, posts);
+            //lv.Adapter = adapter;
+        }
         private void SetNavbarButtons()
         {
             navHome = (LinearLayout)p.FindViewById(Resource.Id.navHome);
             navHome.Click += NavHome_Click;
             navSearch = (LinearLayout)p.FindViewById(Resource.Id.navSearch);
             navSearch.Click += NavSearch_Click;
+            navAccount = (LinearLayout)p.FindViewById(Resource.Id.navAccount);
+            navAccount.Click += NavAccount_Click;
             navLiked = (LinearLayout)p.FindViewById(Resource.Id.navLiked);
             navLiked.Click += NavLiked_Click;
         }
 
         private void NavLiked_Click(object sender, EventArgs e)
         {
-            NavbarHelper.LikedButton(this);
+            Intent refresh = new Intent(this, typeof(LikedActvity));
+            refresh.AddFlags(ActivityFlags.NoAnimation);
+            Finish();
+            StartActivity(refresh);
         }
 
         private void NavHome_Click(object sender, EventArgs e)
         {
             NavbarHelper.HomeButton(this);
+        }
+
+        private void NavAccount_Click(object sender, EventArgs e)
+        {
+            NavbarHelper.AccountButton(this);
         }
         private void NavSearch_Click(object sender, EventArgs e)
         {
@@ -83,13 +105,7 @@ namespace Filtr
 
             #endregion
         }
-        #endregion
-        #region querys
-        private async void ListViewExampleAsync()
-        {
-            Live.db.Collection("posts").WhereEqualTo("creator", Live.user.id).Get()
-                .AddOnSuccessListener(this);
-        }
+
         public void OnSuccess(Java.Lang.Object result)
         {
             var snapshot = (QuerySnapshot)result;
@@ -111,6 +127,5 @@ namespace Filtr
             adapter = new PostAdapter(this, posts);
             lv.Adapter = adapter;
         }
-        #endregion
     }
 }

@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:background="@color/colDark"
     android:paddingTop="5dp"
-    android:id="@+id/account_page"
+    android:id="@+id/liked_page"
     >
     
     <ListView
@@ -36,8 +36,8 @@
             android:layout_width="24dp"
             android:layout_height="27dp"
             android:background="@drawable/home"
-                android:backgroundTint="#8B8E92"
                 android:layout_marginBottom="1dp"
+                android:backgroundTint="#8B8E92"
             />
             <TextView
                 android:layout_width="wrap_content"
@@ -92,7 +92,7 @@
                 android:layout_marginTop="4dp"
             android:layout_height="22dp"
             android:background="@drawable/heart"
-                android:backgroundTint="#8B8E92"
+                android:backgroundTint="#000"
                 android:layout_marginBottom="1dp"
             />
             <TextView
@@ -100,7 +100,7 @@
                 android:layout_height="wrap_content"
                 android:text="Liked"
                 android:textSize="12dp"
-                android:textColor="#8B8E92"
+                android:textColor="#000"
                 android:layout_marginTop="2dp"
                                 android:id="@+id/likedText"
                 />
@@ -120,14 +120,14 @@
             android:layout_width="24dp"
             android:layout_height="24dp"
             android:background="@drawable/account"
-            android:backgroundTint="#000"
+            android:backgroundTint="#8B8E92"
             />
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Account"
                 android:textSize="12dp"
-                android:textColor="#000"
+                android:textColor="#8B8E92"
                 android:layout_marginTop="2dp"
                                 android:id="@+id/accountText"
                 />
@@ -145,7 +145,6 @@
         android:text="＋"
         android:gravity="center"
                 android:id="@+id/btnPlus"
-
 
         android:textSize="40sp"
         android:textColor="#fff"

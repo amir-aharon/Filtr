@@ -12,21 +12,12 @@ using System.Text;
 
 namespace Filtr
 {
-    public abstract class Filter
+    public interface Filter
     {
-        public Bitmap uiBackground { get; private set; } // background in app ui
-        public string name { get; private set; } // filter's name
-        public static Filter filter { get; private set; } // instance of the filter in order to create it once
-        public Bitmap Apply(Bitmap img) // apply the filter on the image (here each algorithm will be applied)
+        public static string name { get; } // filter name
+        public virtual Bitmap Apply(Bitmap img) // apply the filter on the image (here each algorithm will be applied)
         {
             return img; // temp to override
-        }
-        protected Filter() // private constructor
-        {
-        }
-        public Filter GetInstance() // implement Singleton design pattern
-        {
-            return filter; // temp to override
         }
 
     }
