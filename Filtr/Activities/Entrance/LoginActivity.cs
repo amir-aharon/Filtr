@@ -103,6 +103,16 @@ namespace Filtr
                         (string)doc.Get("Fname"),
                         (string)doc.Get("Lname"));
 
+                    ISharedPreferences sp = this.GetSharedPreferences("details", Android.Content.FileCreationMode.Private);
+                    var editor = sp.Edit();
+
+                    editor.PutString("id", Live.user.id);
+                    editor.PutString("email", Live.user.email);
+                    editor.PutString("password", Live.user.password);
+                    editor.PutString("Fname", Live.user.Fname);
+                    editor.PutString("Lname", Live.user.Lname);
+                    editor.Commit();
+
                     Intent it = new Intent(this, typeof(HomeActivity));
                     StartActivity(it);
                     return;

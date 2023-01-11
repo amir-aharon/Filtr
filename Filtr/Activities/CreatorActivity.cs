@@ -26,6 +26,7 @@ namespace Filtr
         private string appliedFilter;
         View p;
         ImageView ivContainer;
+        string photoMethod;
         Button btnExit, btnSave, btnPost, btnNoFilter, btnMonoFilter, btnPixelFilter, btnAsciiFilter;
         HashMap filteredImages;
         const int CAMERA = 0, GALLERY = 1;
@@ -89,6 +90,7 @@ namespace Filtr
             //    }
             //}
             #endregion
+            //if (original == null) Finish();
         }
         protected override void OnActivityResult(int requestCode, Result resultCode, Intent data)
         {

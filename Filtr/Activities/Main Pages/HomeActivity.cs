@@ -62,7 +62,7 @@ namespace Filtr
             btnPlus = (Button)p.FindViewById(Resource.Id.btnPlus);
             btnPlus.Click += BtnPlus_Click;
         }
-
+        #region add post
         private void BtnPlus_Click(object sender, EventArgs e)
         {
             Dialog d = new Dialog(this);
@@ -87,16 +87,18 @@ namespace Filtr
             llGallery.Click += LlGallery_Click;
             d.Show();
         }
-
         private void LlGallery_Click(object sender, EventArgs e)
         {
             photoMethod = "Gallery";
-
             Intent = new Intent(this, typeof(CreatorActivity));
-            //Intent.SetType("image/*");
-            //Intent.SetAction(Intent.ActionGetContent);
             Intent.PutExtra("action", "gallery");
-            //StartActivityForResult(Intent, 0);
+            StartActivity(Intent);
+        }
+        private void LlCamera_Click(object sender, EventArgs e)
+        {
+            photoMethod = "Camera";
+            Intent = new Intent(this, typeof(CreatorActivity));
+            Intent.PutExtra("action", "camera");
             StartActivity(Intent);
         }
         protected override void OnActivityResult(int requestCode, Result resultCode, Intent data)
@@ -107,7 +109,7 @@ namespace Filtr
                 Android.Net.Uri uri = data.Data;
 
                 Intent it = new Intent(this, typeof(CreatorActivity));
-                
+
                 it.SetData(uri);
                 //it.PutExtra("img", bitmap);
                 StartActivity(it);
@@ -140,54 +142,11 @@ namespace Filtr
                 StartActivity(it);
             }
         }
-
-        private void LlCamera_Click(object sender, EventArgs e)
-        {
-            photoMethod = "Camera";
-
-            Intent = new Intent(this, typeof(CreatorActivity));
-            //Intent = new Intent(MediaStore.ActionImageCapture);
-            //StartActivityForResult(Intent, 1);
-            Intent.PutExtra("action", "camera");
-            StartActivity(Intent);
-
-            //var result = await MediaPicker.CapturePhotoAsync();
-
-            //var stream = await result.OpenReadAsync();
-
-
-        }
-        //protected override void OnActivityResult(int requestCode, [GeneratedEnum] Result resultCode, Intent data)
-        //{
-        //    base.OnActivityResult(requestCode, resultCode, data);
-        //    if (requestCode == 0)
-        //    {
-        //        if (resultCode == Result.Ok)
-        //        {
-        //            Bitmap image = (Bitmap)data.Extras.Get("data");
-
-        //            //convert bitmap into byte array
-        //            byte[] bitmapData;
-        //            using (var stream = new MemoryStream())
-        //            {
-        //                image.Compress(Bitmap.CompressFormat.Png, 0, stream);
-        //                bitmapData = stream.ToArray();
-        //            }
-
-
-        //            Intent it = new Intent(this, typeof(CreatorActivity));
-
-        //            it.PutExtra("content", bitmapData);
-        //            StartActivity(it);
-        //        }
-        //    }
-        //}
-
+        #endregion
         private void NavLiked_Click(object sender, EventArgs e)
         {
             NavbarHelper.LikedButton(this);
         }
-
         private void NavAccount_Click(object sender, EventArgs e)
         {
             NavbarHelper.AccountButton(this);

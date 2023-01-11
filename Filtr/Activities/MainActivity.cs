@@ -24,10 +24,30 @@ namespace Filtr
 
             Live.db = GetDataBase();
 
-            // Move to starting page
-            Intent it = new Intent(this, typeof(LandingPageActivity));
-            //Intent it = new Intent(this, typeof(HomeActivity));
-            StartActivity(it);
+            ISharedPreferences sp = this.GetSharedPreferences("details", Android.Content.FileCreationMode.Private);
+            string id = sp.GetString("id", "");
+            if (id != "")
+            {
+                // Set live user details
+                Live.user = new User(
+                        sp.GetString("id", ""),
+                        sp.GetString("email", ""),
+                        sp.GetString("password", ""),
+                        sp.GetString("Fname", ""),
+                        sp.GetString("Lname", ""));
+
+                // Move to home page
+                Intent it = new Intent(this, typeof(HomeActivity));
+                StartActivity(it);
+            }
+            else
+            {
+                // Move to starting page
+                Intent it = new Intent(this, typeof(LandingPageActivity));
+                StartActivity(it);
+            }
+
+            
         }
         public FirebaseFirestore GetDataBase()
         {
