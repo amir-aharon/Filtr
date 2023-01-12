@@ -165,8 +165,8 @@ namespace Filtr
 
         private void Menu_MenuItemClick(object sender, PopupMenu.MenuItemClickEventArgs e)
         {
-            string filter = e.Item.ToString();
-            queryType = "Filters_" + filter;
+            string filter = e.Item.ToString().ToLower();
+            queryType = "Filters";
             Query q = Live.db.Collection("posts").WhereEqualTo("filter", filter);
             q.Get().AddOnSuccessListener(this);
         }
@@ -236,23 +236,27 @@ namespace Filtr
                 Typeface tf = Typeface.CreateFromAsset(Assets, "Poppins-SemiBold.ttf");
                 tvTopBar.SetTypeface(tf, TypefaceStyle.Normal);
             }
-            else if (queryType.Equals("Filters_NoFilter"))
+            else if (queryType.Equals("Filters"))
             {
                 var snapshot = (QuerySnapshot)result;
+
+                if (snapshot.Documents.Count == 0)
+                {
+                    Toast.MakeText(this, "There aren't posts with this filter", ToastLength.Short).Show();
+                    return;
+                }
+
                 List<Post> posts = new List<Post>();
                 foreach (var post in snapshot.Documents)
                 {
-                    if (post.GetString("creator") != Live.user.id)
-                    {
-                        posts.Add(new Post(
-                        post.Id,
-                        post.GetString("creator"),
-                        post.GetString("content"),
-                        post.GetString("filter"),
-                        post.GetString("c_Fname"),
-                        post.GetString("c_Lname")
-                        ));
-                    }
+                    posts.Add(new Post(
+                    post.Id,
+                    post.GetString("creator"),
+                    post.GetString("content"),
+                    post.GetString("filter"),
+                    post.GetString("c_Fname"),
+                    post.GetString("c_Lname")
+                    ));
                 }
                 adapter = new PostAdapter(this, posts);
                 lv.Adapter = adapter;
@@ -272,9 +276,7 @@ namespace Filtr
             }
         }
 
-
-
-
+        #region setup
         private void SetNavbarButtons()
         {
             navHome = (LinearLayout)p.FindViewById(Resource.Id.navHome);
@@ -324,6 +326,7 @@ namespace Filtr
             text.SetTypeface(tf, TypefaceStyle.Normal);
             #endregion
         }
+        #endregion
     }
 
 }

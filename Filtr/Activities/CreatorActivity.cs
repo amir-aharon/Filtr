@@ -207,6 +207,7 @@ namespace Filtr
         {
             applied = (Bitmap)filteredImages.Get("original");
             ivContainer.SetImageBitmap(applied);
+            appliedFilter = "nofilter";
         }
         private void BtnExit_Click(object sender, EventArgs e)
         {

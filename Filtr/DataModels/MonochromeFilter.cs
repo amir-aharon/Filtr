@@ -21,9 +21,9 @@ namespace Filtr
             Bitmap newImg = Bitmap.CreateBitmap(original);
 
             // Iterate through each pixel in the bitmap
-            for (int y = 0; y < original.Height; y++)
+            for (int y = 0; y < newImg.Height; y++)
             {
-                for (int x = 0; x < original.Width; x++)
+                for (int x = 0; x < newImg.Width; x++)
                 {
                     // Get the color of the 
                     ColorObject color = original.GetColor(x, y);
@@ -35,7 +35,7 @@ namespace Filtr
                     Color newColor = Color.Argb(255, gray, gray, gray);
 
                     // Set the pixel in the new bitmap to the grayscale color
-                    newImg.SetPixel(x, y, newColor);
+                    //newImg.SetPixel(x, y, newColor);
                 }
             }
             // Return the grayscale bitmap
