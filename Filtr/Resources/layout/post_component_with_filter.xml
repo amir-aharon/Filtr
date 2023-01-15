@@ -12,6 +12,7 @@
         android:layout_height="400dp"
         android:layout_marginVertical="5dp"
         android:background="@drawable/image_holder"
+        android:id="@+id/ivContent"
         />
 
     <RelativeLayout
