@@ -37,6 +37,7 @@
             android:layout_height="wrap_content"
             android:textSize="20sp"
                 android:text="#[filter_name]"
+                android:id="@+id/tvFilter"
             android:textColor="#FFE66D"
 />
 
@@ -51,14 +52,14 @@
             android:layout_width="43dp"
             android:layout_height="40dp"
             android:layout_marginBottom="5dp"
-                android:id="@+id/likeIcon"
+                android:id="@+id/fullIcon"
                 android:visibility="invisible"
             android:background="@drawable/like_full"/>
             <ImageView
             android:layout_width="43dp"
             android:layout_height="40dp"
             android:layout_marginBottom="5dp"
-                android:id="@+id/fullIcon"
+                android:id="@+id/emptyIcon"
             android:background="@drawable/like_empty"/>
         </FrameLayout>
 

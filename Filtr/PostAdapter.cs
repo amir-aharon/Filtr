@@ -7,6 +7,7 @@ using Android.Runtime;
 using Android.Views;
 using Android.Widget;
 using Firebase.Firestore;
+using Firebase.Firestore.Auth;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -77,6 +78,11 @@ namespace Filtr
                         QueryFilter(context, temp.filter);
                     };
 
+                    tvUser.Click += (object sender, EventArgs e) =>
+                    {
+                        QueryUser(context, temp.creator);
+                    };
+
                     queryType = "SetupHome";
 
                     likeIconsDisplays.Add(fullIcon);
@@ -118,6 +124,11 @@ namespace Filtr
                     tvFilter.Click += (object sender, EventArgs e) =>
                     {
                         QueryFilter(context, temp.filter);
+                    };
+
+                    tvUser.Click += (object sender, EventArgs e) =>
+                    {
+                        QueryUser(context, temp.creator);
                     };
 
                     queryType = "SetupHome";
@@ -192,6 +203,52 @@ namespace Filtr
 
                     queryType = "SetupHome";
 
+                    tvUser.Click += (object sender, EventArgs e) =>
+                    {
+                        QueryUser(context, temp.creator);
+                    };
+
+                    likeIconsDisplays.Add(fullIcon);
+                    Live.db.Collection("posts").Document(temp.id).Get().AddOnSuccessListener(this);
+
+                    if (temp.content != null)
+                    {
+                        ivContent.SetImageBitmap(ImageHelper.Base64ToBitmap(temp.content));
+                    }
+
+                    btnLike.Click += (object sender, EventArgs e) =>
+                    {
+                        ToggleLike(sender, temp);
+                    };
+                }
+                return view;
+            }
+            else if (type.Equals("Search_User"))
+            {
+                #region Connect Views
+                LayoutInflater layoutInflater = ((SearchActivity)context).LayoutInflater;
+                View view = layoutInflater.Inflate(Resource.Layout.post_component_with_filter, parent, false);
+                SetupFonts((SearchActivity)context, view);
+                TextView tvFilter = (TextView)view.FindViewById(Resource.Id.tvFilter);
+                FrameLayout btnLike = (FrameLayout)view.FindViewById(Resource.Id.btnLike);
+                fullIcon = (ImageView)view.FindViewById(Resource.Id.fullIcon);
+                ImageView emptyIcon = (ImageView)view.FindViewById(Resource.Id.emptyIcon);
+                ImageView ivContent = (ImageView)view.FindViewById(Resource.Id.ivContent);
+                #endregion
+
+                Post temp = objects[position];
+
+                if (temp != null)
+                {
+                    tvFilter.Text = "#" + temp.filter;
+
+                    queryType = "SetupHome";
+
+                    tvFilter.Click += (object sender, EventArgs e) =>
+                    {
+                        QueryFilter(context, temp.filter);
+                    };
+
                     likeIconsDisplays.Add(fullIcon);
                     Live.db.Collection("posts").Document(temp.id).Get().AddOnSuccessListener(this);
 
@@ -214,7 +271,15 @@ namespace Filtr
         private void QueryFilter(Context context, string filter)
         {
             Intent it = new Intent(context, typeof(SearchActivity));
-            it.PutExtra("filterQuery", filter);
+            it.PutExtra("qType", "Filters");
+            it.PutExtra("filtersQuery", filter);
+            context.StartActivity(it);
+        }
+        private void QueryUser(Context context, string creator)
+        {
+            Intent it = new Intent(context, typeof(SearchActivity));
+            it.PutExtra("qType", "Users");
+            it.PutExtra("usersQuery", creator);
             context.StartActivity(it);
         }
 

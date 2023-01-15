@@ -37,17 +37,18 @@ namespace Filtr
 
             btnSearch = (FlexboxLayout)p.FindViewById(Resource.Id.btnSearch);
 
-            PostAdapter.type = "Search_Filter";
             lv = (ListView)p.FindViewById(Resource.Id.lv);
             lv.Visibility = ViewStates.Invisible;
 
             btnSearch.Click += BtnSearch_Click;
 
-            string query = Intent.GetStringExtra("filterQuery");
-            if (query != null)
+            string qType = Intent.GetStringExtra("qType");
+            if (qType != null)
             {
-                queryType = "Filters_" + query;
-                Query q = Live.db.Collection("posts").WhereEqualTo("filter", query);
+                queryType = qType;
+                Query q = qType == "Filters"
+                    ? Live.db.Collection("posts").WhereEqualTo("filter", Intent.GetStringExtra("filtersQuery"))
+                    : Live.db.Collection("posts").WhereEqualTo("creator", Intent.GetStringExtra("usersQuery"));
                 q.Get().AddOnSuccessListener(this);
             }
         }
@@ -221,6 +222,7 @@ namespace Filtr
                     ));
                 }
                 adapter = new PostAdapter(this, posts);
+                PostAdapter.type = "Search_User";
                 lv.Adapter = adapter;
 
                 lv.Visibility = ViewStates.Visible;
@@ -231,8 +233,8 @@ namespace Filtr
                 btnSearch.Visibility = ViewStates.Gone;
 
                 TextView tvTopBar = (TextView)p.FindViewById(Resource.Id.tvTopBar);
-                tvTopBar.Text = "#" + posts[0].filter;
-                tvTopBar.SetTextColor(Color.ParseColor("#FFE66D"));
+                tvTopBar.Text = "By " + posts[0].cFname + " " + posts[0].cLname;
+                tvTopBar.SetTextColor(Color.ParseColor("#4ecdc4"));
                 Typeface tf = Typeface.CreateFromAsset(Assets, "Poppins-SemiBold.ttf");
                 tvTopBar.SetTypeface(tf, TypefaceStyle.Normal);
             }
@@ -259,6 +261,7 @@ namespace Filtr
                     ));
                 }
                 adapter = new PostAdapter(this, posts);
+                PostAdapter.type = "Search_Filter";
                 lv.Adapter = adapter;
 
                 lv.Visibility = ViewStates.Visible;
