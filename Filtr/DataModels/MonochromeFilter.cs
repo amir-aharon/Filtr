@@ -15,10 +15,11 @@ namespace Filtr
     public class MonochromeFilter : Filter
     {
         public static string name = "Mono";
-        public static Bitmap Apply(Bitmap original)
+        public static Bitmap Apply(Bitmap original, int w, int h)
         {
             // Create a blank bitmap with the same dimensions as the original
-            Bitmap newImg = Bitmap.CreateBitmap(original);
+            original = ImageHelper.GetResizedBitmap(original, w, h);
+            Bitmap newImg = Bitmap.CreateBitmap(original.Width, original.Height, Bitmap.Config.Argb8888);
 
             // Iterate through each pixel in the bitmap
             for (int y = 0; y < original.Height; y++)
@@ -39,6 +40,7 @@ namespace Filtr
                 }
             }
             // Return the grayscale bitmap
+            
             return newImg;
         }
     }

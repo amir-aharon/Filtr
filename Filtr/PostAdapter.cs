@@ -76,6 +76,10 @@ namespace Filtr
                     {
                         QueryFilter(context, temp.filter);
                     };
+                    tvUser.Click += (object sender, EventArgs e) =>
+                    {
+                        QueryUser(context, temp.creator);
+                    };
 
                     queryType = "SetupHome";
 
@@ -118,6 +122,10 @@ namespace Filtr
                     tvFilter.Click += (object sender, EventArgs e) =>
                     {
                         QueryFilter(context, temp.filter);
+                    };
+                    tvUser.Click += (object sender, EventArgs e) =>
+                    {
+                        QueryUser(context, temp.creator);
                     };
 
                     queryType = "SetupHome";
@@ -190,6 +198,11 @@ namespace Filtr
                 {
                     tvUser.Text = "By " + temp.cFname + " " + temp.cLname;
 
+                    tvUser.Click += (object sender, EventArgs e) =>
+                    {
+                        QueryUser(context, temp.creator);
+                    };
+
                     queryType = "SetupHome";
 
                     likeIconsDisplays.Add(fullIcon);
@@ -207,17 +220,65 @@ namespace Filtr
                 }
                 return view;
             }
+            else if (type.Equals("Search_User"))
+            {
+                #region Connect Views
+                LayoutInflater layoutInflater = ((SearchActivity)context).LayoutInflater;
+                View view = layoutInflater.Inflate(Resource.Layout.post_component_with_filter, parent, false);
+                SetupFonts((SearchActivity)context, view);
+                TextView tvFilter = (TextView)view.FindViewById(Resource.Id.tvFilter);
+                FrameLayout btnLike = (FrameLayout)view.FindViewById(Resource.Id.btnLike);
+                fullIcon = (ImageView)view.FindViewById(Resource.Id.fullIcon);
+                ImageView emptyIcon = (ImageView)view.FindViewById(Resource.Id.emptyIcon);
+                ImageView ivContent = (ImageView)view.FindViewById(Resource.Id.ivContent);
+                #endregion
 
+                Post temp = objects[position];
+
+                if (temp != null)
+                {
+                    tvFilter.Text = "#" + temp.filter;
+
+                    tvFilter.Click += (object sender, EventArgs e) =>
+                    {
+                        QueryFilter(context, temp.filter);
+                    };
+
+                    queryType = "SetupHome";
+
+                    likeIconsDisplays.Add(fullIcon);
+                    Live.db.Collection("posts").Document(temp.id).Get().AddOnSuccessListener(this);
+
+                    if (temp.content != null)
+                    {
+                        ivContent.SetImageBitmap(ImageHelper.Base64ToBitmap(temp.content));
+                    }
+
+                    btnLike.Click += (object sender, EventArgs e) =>
+                    {
+                        ToggleLike(sender, temp);
+                    };
+                }
+                return view;
+            }
             return null;
         }
-
         private void QueryFilter(Context context, string filter)
         {
             Intent it = new Intent(context, typeof(SearchActivity));
-            it.PutExtra("filterQuery", filter);
+            it.PutExtra("filtersQuery", filter);
+            it.PutExtra("isQuery", true);
+            it.PutExtra("isFilterQueried", true);
             context.StartActivity(it);
         }
-
+        private void QueryUser(Context context, string uid)
+        {
+            Intent it = new Intent(context, typeof(SearchActivity));
+            it.PutExtra("usersQuery", uid);
+            it.PutExtra("isQuery", true);
+            it.PutExtra("isUserQueried", true);
+            context.StartActivity(it);
+        }
         private void SetupFonts(Context ctx, View view)
         {
             Typeface tf = Typeface.CreateFromAsset(ctx.Assets, "Poppins-Regular.ttf");

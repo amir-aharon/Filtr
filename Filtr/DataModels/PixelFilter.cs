@@ -14,23 +14,17 @@ namespace Filtr
 {
     public class PixelFilter : Filter
     {
-        public Bitmap uiBackground { get; private set; } // background in app ui
         public string name { get; private set; } // filter's name
-        public static PixelFilter filter = new PixelFilter(); // instance of the filter in order to create it once
-        public Bitmap Apply(Bitmap img) // apply the filter on the image (here each algorithm will be applied)
+        public static Bitmap Apply(Bitmap original)
         {
-            return img; // temp to override
-        }
-        private PixelFilter() // private constructor
-        {
-            this.name = "pixelate";
+            // Create a blank bitmap with the same dimensions as the original
+            original = ImageHelper.GetResizedBitmap(original, 128, 128);
+            original = ImageHelper.GetResizedBitmap(original, 500, 500);
+            //Bitmap newImg = Bitmap.CreateBitmap(original.Width, original.Height, Bitmap.Config.Argb8888);
 
-        }
-        public PixelFilter GetInstance() // implement Singleton design pattern
-        {
-            if (filter == null)
-                filter = new PixelFilter();
-            return filter; // temp to override
+            
+
+            return original;
         }
     }
 }

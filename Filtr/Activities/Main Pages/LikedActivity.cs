@@ -41,25 +41,11 @@ namespace Filtr
             PostAdapter.type = "Liked";
             lv = p.FindViewById<ListView>(Resource.Id.lv);
 
-            ListViewExample();
+            Live.db.Collection("posts").WhereArrayContains("likedBy", Live.user.id).Get().AddOnSuccessListener(this);
 
             SetupFonts();
         }
-        public void ListViewExample()
-        {
-            User u1 = new User("1", "aaa@aaa.aaa", "aaaaaaaa1", "Amir", "Aharon");
-            Filter f1 = PixelFilter.filter;
 
-            //posts.Add(new Post("HiEnRTD77d12c3j74m5D", u1, f1));
-            //posts.Add(new Post("HiEnRTD77d12c3j74m5D", u1));
-            //posts.Add(new Post("HiEnRTD77d12c3j74m5D", u1, f1));
-
-            Live.db.Collection("posts").WhereArrayContains("likedBy", Live.user.id).Get().AddOnSuccessListener(this);
-
-
-            //adapter = new PostAdapter(this, posts);
-            //lv.Adapter = adapter;
-        }
         #region add post
         private void BtnPlus_Click(object sender, EventArgs e)
         {

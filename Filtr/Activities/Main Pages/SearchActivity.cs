@@ -37,19 +37,34 @@ namespace Filtr
 
             btnSearch = (FlexboxLayout)p.FindViewById(Resource.Id.btnSearch);
 
-            PostAdapter.type = "Search_Filter";
             lv = (ListView)p.FindViewById(Resource.Id.lv);
             lv.Visibility = ViewStates.Invisible;
 
             btnSearch.Click += BtnSearch_Click;
 
-            string query = Intent.GetStringExtra("filterQuery");
-            if (query != null)
+            bool isFilterQueried = Intent.GetBooleanExtra("isFilterQueried", false);
+            bool isUserQueried = Intent.GetBooleanExtra("isUserQueried", false);
+            bool isQuery = Intent.GetBooleanExtra("isQuery", false);
+            Query q;
+
+            if (isQuery)
             {
-                queryType = "Filters_" + query;
-                Query q = Live.db.Collection("posts").WhereEqualTo("filter", query);
-                q.Get().AddOnSuccessListener(this);
+
+                if (isFilterQueried)
+                {
+                    queryType = "Filters";
+                    Live.db.Collection("posts").WhereEqualTo("filter", Intent.GetStringExtra("filtersQuery")).Get().AddOnSuccessListener(this);
+                }
+                else if (isUserQueried)
+                {
+                    queryType = "Users";
+                    Live.db.Collection("posts").WhereEqualTo("creator", Intent.GetStringExtra("usersQuery")).Get().AddOnSuccessListener(this);
+                }
             }
+
+            Intent.PutExtra("isFilterQueried", false);
+            Intent.PutExtra("isUserQueried", false);
+            Intent.PutExtra("isQuery", false);
         }
         #region add post
         private void BtnPlus_Click(object sender, EventArgs e)
@@ -165,8 +180,8 @@ namespace Filtr
 
         private void Menu_MenuItemClick(object sender, PopupMenu.MenuItemClickEventArgs e)
         {
-            string filter = e.Item.ToString();
-            queryType = "Filters_" + filter;
+            string filter = e.Item.ToString().ToLower();
+            queryType = "Filters";
             Query q = Live.db.Collection("posts").WhereEqualTo("filter", filter);
             q.Get().AddOnSuccessListener(this);
         }
@@ -221,6 +236,7 @@ namespace Filtr
                     ));
                 }
                 adapter = new PostAdapter(this, posts);
+                PostAdapter.type = "Search_User";
                 lv.Adapter = adapter;
 
                 lv.Visibility = ViewStates.Visible;
@@ -231,30 +247,35 @@ namespace Filtr
                 btnSearch.Visibility = ViewStates.Gone;
 
                 TextView tvTopBar = (TextView)p.FindViewById(Resource.Id.tvTopBar);
-                tvTopBar.Text = "#" + posts[0].filter;
-                tvTopBar.SetTextColor(Color.ParseColor("#FFE66D"));
+                tvTopBar.Text = "By " + posts[0].cFname + " " + posts[0].cLname;
+                tvTopBar.SetTextColor(Color.ParseColor("#4ecdc4"));
                 Typeface tf = Typeface.CreateFromAsset(Assets, "Poppins-SemiBold.ttf");
                 tvTopBar.SetTypeface(tf, TypefaceStyle.Normal);
             }
-            else if (queryType.Equals("Filters_NoFilter"))
+            else if (queryType.Equals("Filters"))
             {
                 var snapshot = (QuerySnapshot)result;
+
+                if (snapshot.Documents.Count == 0)
+                {
+                    Toast.MakeText(this, "There aren't posts with this filter", ToastLength.Short).Show();
+                    return;
+                }
+
                 List<Post> posts = new List<Post>();
                 foreach (var post in snapshot.Documents)
                 {
-                    if (post.GetString("creator") != Live.user.id)
-                    {
-                        posts.Add(new Post(
-                        post.Id,
-                        post.GetString("creator"),
-                        post.GetString("content"),
-                        post.GetString("filter"),
-                        post.GetString("c_Fname"),
-                        post.GetString("c_Lname")
-                        ));
-                    }
+                    posts.Add(new Post(
+                    post.Id,
+                    post.GetString("creator"),
+                    post.GetString("content"),
+                    post.GetString("filter"),
+                    post.GetString("c_Fname"),
+                    post.GetString("c_Lname")
+                    ));
                 }
                 adapter = new PostAdapter(this, posts);
+                PostAdapter.type = "Search_Filter";
                 lv.Adapter = adapter;
 
                 lv.Visibility = ViewStates.Visible;
@@ -272,9 +293,7 @@ namespace Filtr
             }
         }
 
-
-
-
+        #region setup
         private void SetNavbarButtons()
         {
             navHome = (LinearLayout)p.FindViewById(Resource.Id.navHome);
@@ -324,6 +343,7 @@ namespace Filtr
             text.SetTypeface(tf, TypefaceStyle.Normal);
             #endregion
         }
+        #endregion
     }
 
 }

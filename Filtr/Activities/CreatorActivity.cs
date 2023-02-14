@@ -58,39 +58,6 @@ namespace Filtr
                     StartActivityForResult(Intent, GALLERY);
                 }
             }
-
-            #region temp
-            //if (original == null)
-            //{
-            //    var uri = Intent.Data;
-            //    if (uri is Android.Net.Uri)
-            //    {
-            //        BitmapFactory.Options options = new BitmapFactory.Options();
-            //        options.InJustDecodeBounds = true;
-            //        options.InSampleSize = 3;
-
-            //        
-            //        original = ImageHelper.CropToSquare(original);
-
-            //        filteredImages.Put("original", original);
-
-
-            //        //int size = original.Width * original.Height;
-            //        //ByteBuffer byteBuffer = ByteBuffer.Allocate(size);
-            //        //original.CopyPixelsToBuffer(byteBuffer);
-
-            //        //byte[] byteArray = (byte[])byteBuffer;
-
-            //        //Bitmap.Config configBmp = Bitmap.Config.ValueOf(original.GetConfig().Name());
-            //        //Bitmap bitmap_tmp = Bitmap.CreateBitmap(original.Width, original.Height, configBmp);
-            //        //ByteBuffer buffer = ByteBuffer.Wrap(byteArray);
-            //        //bitmap_tmp.CopyPixelsFromBuffer(buffer);
-
-            //        //Bitmap bmp = BitmapFactory.DecodeByteArray(byteArray, 0, byteArray.Length, options);
-            //    }
-            //}
-            #endregion
-            //if (original == null) Finish();
         }
         protected override void OnActivityResult(int requestCode, Result resultCode, Intent data)
         {
@@ -105,7 +72,7 @@ namespace Filtr
 
                 filteredImages.Put("original", original);
                 ivContainer.SetImageBitmap(original);
-                applied = original;
+                applied = ImageHelper.GetResizedBitmap(original, 500, 500);
                 appliedFilter = "NoFilter";
             }
             else if (requestCode == CAMERA)
@@ -115,7 +82,7 @@ namespace Filtr
 
                 filteredImages.Put("original", original);
                 ivContainer.SetImageBitmap(original);
-                applied = original;
+                applied = ImageHelper.GetResizedBitmap(original, 500, 500);
                 appliedFilter = "NoFilter";
             }
         }
@@ -124,7 +91,6 @@ namespace Filtr
             ivContainer = (ImageView)FindViewById(Resource.Id.ivcreatorpage);
 
             btnExit = p.FindViewById<Button>(Resource.Id.btnExit);
-            btnSave = p.FindViewById<Button>(Resource.Id.btnSave);
             btnPost = p.FindViewById<Button>(Resource.Id.btnPost);
             btnMonoFilter = p.FindViewById<Button>(Resource.Id.btnMonoFilter);
             btnNoFilter = p.FindViewById<Button>(Resource.Id.btnNoFilter);
@@ -135,7 +101,36 @@ namespace Filtr
             btnNoFilter.Click += BtnNoFilter_Click;
             btnMonoFilter.Click += BtnMonoFilter_Click;
             btnPost.Click += BtnPost_Click;
-            btnSave.Click += BtnSave_Click;
+            btnPixelFilter.Click += BtnPixelFilter_Click;
+            btnAsciiFilter.Click += BtnAsciiFilter_Click;
+        }
+
+        private void BtnAsciiFilter_Click(object sender, EventArgs e)
+        {
+            //Console.WriteLine("OKOK");
+            if ((Bitmap)filteredImages.Get("ascii") == null)
+            {
+                Bitmap bm = AsciiFilter.Apply((Bitmap)filteredImages.Get("original"), this);
+                filteredImages.Put("ascii", bm);
+            }
+
+            applied = (Bitmap)filteredImages.Get("ascii");
+            ivContainer.SetImageBitmap(applied);
+            appliedFilter = "ascii";
+        }
+
+        private void BtnPixelFilter_Click(object sender, EventArgs e)
+        {
+            //Console.WriteLine("OKOK");
+            if ((Bitmap)filteredImages.Get("pixel") == null)
+            {
+                Bitmap bm = PixelFilter.Apply((Bitmap)filteredImages.Get("original"));
+                filteredImages.Put("pixel", bm);
+            }
+
+            applied = (Bitmap)filteredImages.Get("pixel");
+            ivContainer.SetImageBitmap(applied);
+            appliedFilter = "pixelate";
         }
 
         private void BtnSave_Click(object sender, EventArgs e)
@@ -193,9 +188,10 @@ namespace Filtr
         }
         private void BtnMonoFilter_Click(object sender, EventArgs e)
         {
+            //Console.WriteLine("OKOK");
             if ((Bitmap)filteredImages.Get("mono") == null)
             {
-                Bitmap bm = MonochromeFilter.Apply((Bitmap)filteredImages.Get("original"));
+                Bitmap bm = MonochromeFilter.Apply((Bitmap)filteredImages.Get("original"), 500, 500);
                 filteredImages.Put("mono", bm);
             }
 
@@ -207,6 +203,7 @@ namespace Filtr
         {
             applied = (Bitmap)filteredImages.Get("original");
             ivContainer.SetImageBitmap(applied);
+            appliedFilter = "nofilter";
         }
         private void BtnExit_Click(object sender, EventArgs e)
         {
@@ -216,9 +213,7 @@ namespace Filtr
         {
             #region textfields, subhead, Footer text (Regular Poppins)
             Typeface tf = Typeface.CreateFromAsset(Assets, "Poppins-Regular.ttf");
-            Button btn = (Button)p.FindViewById(Resource.Id.btnSave);
-            btn.SetTypeface(tf, TypefaceStyle.Normal);
-            btn = (Button)p.FindViewById(Resource.Id.btnPost);
+            Button btn = (Button)p.FindViewById(Resource.Id.btnPost);
             btn.SetTypeface(tf, TypefaceStyle.Normal);
             #endregion
         }
