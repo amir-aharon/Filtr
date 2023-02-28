@@ -18,6 +18,14 @@ using Android.Gms.Tasks;
 using Android.Gms.Extensions;
 using System.Threading;
 
+// REGISTRATION PROCESS:
+// Fill Form
+// 1. Submit
+// 2. Get email availability
+// 3. Validate form
+// 4. Create database entity
+// 5. create session
+
 namespace Filtr
 {
     [Activity(Label = "RegisterActivity")]
@@ -32,14 +40,12 @@ namespace Filtr
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
-            
             Live.user = null;
-
             SetContentView(Resource.Layout.register_page);
             ConnectViews();
             SetupFonts();
         }
-        private void SetupFonts() // setup the fonts for the ui components
+        private void SetupFonts() // setup the fonts for the ui components 
         {
             #region Header, Button, Footer link (Semi-Bold Poppins)
             Typeface tf = Typeface.CreateFromAsset(Assets, "Poppins-SemiBold.ttf");
@@ -62,7 +68,7 @@ namespace Filtr
             text.SetTypeface(tf, TypefaceStyle.Normal);
             #endregion
         }
-        private void ConnectViews() // connects all of the components
+        private void ConnectViews() // connects all of the components 
         {
             p = FindViewById<View>(Resource.Id.register_page);
 
@@ -79,25 +85,26 @@ namespace Filtr
             etName.Text = "";
             etConfirm.Text = "";
 
-            btnRegister.Click += BtnRegister_Click;
+            btnRegister.Click += Submit;
             btnToLogin.Click += BtnToLogin_Click;
         }
         #endregion
+
         #region events
-        private void BtnToLogin_Click(object sender, EventArgs e) // sends user to login page
+        private void BtnToLogin_Click(object sender, EventArgs e) // navigates to login page
         {
             Intent it = new Intent(this, typeof(LoginActivity));
-            it.AddFlags(ActivityFlags.NoAnimation);
             StartActivity(it);
         }
-        private void BtnRegister_Click(object sender, EventArgs e)
+        private void Submit(object sender, EventArgs e) // submit button
         {
-            SortCaseByEmailAvailability();
+            GetEmailAvailability();
         } 
         #endregion
+
         #region form
         #region email availablilty
-        private void SortCaseByEmailAvailability()
+        private void GetEmailAvailability() // checks if email is available or not
         {
             Live.db.Collection("users")
                .WhereEqualTo("email", etEmail.Text)
@@ -107,16 +114,18 @@ namespace Filtr
         {
             var snapshot = (QuerySnapshot)result; // get list of all docs matching the query
 
+            // call regular validation with premade decision (for UX)
             if (!snapshot.IsEmpty)
-                HandleForm(false);
+                HandleForm(false); 
             else
                 HandleForm(true);
 
         }
         #endregion
         #region handlers
-        private void HandleForm(bool emailIsAvaliable) // validate & save to db
+        private void HandleForm(bool emailIsAvaliable) // validate, then save to db and start a new session
         {
+            // validation function
             if (!IsFormValid(emailIsAvaliable)) return;
 
             HashMap map = new HashMap();
@@ -141,6 +150,9 @@ namespace Filtr
             map.Put("likedPosts", new ArrayList());
             map.Put("posts", new ArrayList());
 
+            // setup flag for new likes (since last log in)
+            map.Put("newLikes", false);
+
             // create document reference for firestore
             DocumentReference userRef = Live.db.Collection("users").Document();
 
@@ -153,8 +165,10 @@ namespace Filtr
                 (string)map.Get("email"), 
                 (string)map.Get("password"), 
                 (string)map.Get("Fname"), 
-                (string)map.Get("Lname"));
+                (string)map.Get("Lname"),
+                (bool)map.Get("newLikes"));
 
+            // create session for the new logged user
             ISharedPreferences sp = this.GetSharedPreferences("details", Android.Content.FileCreationMode.Private);
             var editor = sp.Edit();
 
@@ -163,12 +177,13 @@ namespace Filtr
             editor.PutString("password", Live.user.password);
             editor.PutString("Fname", Live.user.Fname);
             editor.PutString("Lname", Live.user.Lname);
+            editor.PutBoolean("newLikes", Live.user.newLikes);
             editor.Commit();
 
             Intent it = new Intent(this, typeof(HomeActivity));
             StartActivity(it);
         }
-        private bool IsFormValid(bool emailIsAvailable) // validates the whole form
+        private bool IsFormValid(bool emailIsAvailable) // handles validation process
         {
             return IsNameValid() && IsEmailValid(emailIsAvailable) && IsPasswordValid() && ArePasswordsMatching();
         }
@@ -176,6 +191,7 @@ namespace Filtr
         #region string check
         private bool IsEmailValid(bool emailIsAvailable) // validates the email
         {
+            // check availability
             if (!emailIsAvailable)
             {
                 Toast.MakeText(this, "Email is already taken", ToastLength.Long).Show();
@@ -199,7 +215,7 @@ namespace Filtr
                 return false;
             }
 
-            // utilize email validation provided by .NET
+            // utilize email validation provided by .NET (regex)
             Regex rg = new Regex(@"[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?");
             if (rg.IsMatch(email) && Regex.Matches(email, "@").Count == 1)
             {
@@ -208,7 +224,7 @@ namespace Filtr
             Toast.MakeText(this, "Entered email address isn't valid", ToastLength.Long).Show();
             return false;
         }
-        private bool ArePasswordsMatching() // checks if password confirmation is correct
+        private bool ArePasswordsMatching() // checks password confirmation
         {
             // check if the password confirm is matching
             if (!etPassword.Text.Equals(etConfirm.Text))

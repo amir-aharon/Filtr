@@ -12,7 +12,7 @@ using System.Text;
 
 namespace Filtr
 {
-    public class AsciiFilter
+    public class AsciiFilter : Filter
     {
         public string name { get; private set; } // filter's name
         public static Bitmap Apply(Bitmap original, Context ctx)

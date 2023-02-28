@@ -19,13 +19,18 @@ namespace Filtr
             base.OnCreate(savedInstanceState);  
             Xamarin.Essentials.Platform.Init(this, savedInstanceState);
 
-            // Loading Screen
+            // loading screen (only to show something if phone lags)
             SetContentView(Resource.Layout.loading);
 
-            Live.db = GetDataBase();
+            // connect to firestore
+            if (Live.db == null)
+                Live.db = GetDataBase();
 
-            ISharedPreferences sp = this.GetSharedPreferences("details", Android.Content.FileCreationMode.Private);
+            // connects to the session
+            ISharedPreferences sp = GetSharedPreferences("details", Android.Content.FileCreationMode.Private);
             string id = sp.GetString("id", "");
+
+            // if theres a user in the session (aka logged from this device)
             if (id != "")
             {
                 // Set live user details
@@ -34,22 +39,32 @@ namespace Filtr
                         sp.GetString("email", ""),
                         sp.GetString("password", ""),
                         sp.GetString("Fname", ""),
-                        sp.GetString("Lname", ""));
+                        sp.GetString("Lname", ""),
+                        sp.GetBoolean("newLikes", false));
 
-                // Move to home page
+                // update that the user has logged
+                DocumentReference docRef = Live.db.Collection("users").Document(Live.user.id);
+                docRef.Update("newLikes", false);
+
+                // listener for new likes later, when user is idle
+                CallAlarmManager();
+
+                // navigate to home page
                 Intent it = new Intent(this, typeof(HomeActivity));
                 StartActivity(it);
             }
+            // if no one isn't logged from this device
             else
             {
-                // Move to starting page
+                // listener for new likes later, when user is idle (if a user will log in)
+                CallAlarmManager();
+
+                // navigate to landing page
                 Intent it = new Intent(this, typeof(LandingPageActivity));
                 StartActivity(it);
             }
-
-            
         }
-        public FirebaseFirestore GetDataBase()
+        public FirebaseFirestore GetDataBase() // returns a DB reference 
         {
             FirebaseFirestore db;
 
@@ -64,6 +79,24 @@ namespace Filtr
             var app = FirebaseApp.InitializeApp(this, options);
             db = FirebaseFirestore.GetInstance(app);
             return db;
+        }
+        public void CallAlarmManager() // calls the alarm manager 
+        {
+            // create action -> call receiver
+            Intent it = new Intent(this, typeof(AlarmReceiver));
+
+            // turn action into a pending-able type
+            PendingIntent pi = PendingIntent.GetBroadcast(Application.Context, 1, it, 0);
+
+            // declare and initialize alarm manager
+            AlarmManager alarmManager = (AlarmManager)GetSystemService(AlarmService);
+
+            // set the alarm manager -> performs the action every 5 minutes
+            alarmManager.SetRepeating(
+                AlarmType.ElapsedRealtimeWakeup,
+                SystemClock.ElapsedRealtime() + 1000, // first call
+                1000 * 5, // repeat interval in millieseconds
+                pi); // action
         }
     }
 }

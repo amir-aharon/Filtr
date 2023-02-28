@@ -90,6 +90,7 @@
     <Compile Include="Helpers\ImageHelper.cs" />
     <Compile Include="Helpers\NavbarHelper.cs" />
     <Compile Include="PostAdapter.cs" />
+    <Compile Include="AlarmReceiver.cs" />
     <Compile Include="Resources\Resource.designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Activities\Main Pages\SearchActivity.cs" />

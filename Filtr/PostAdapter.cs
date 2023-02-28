@@ -310,6 +310,9 @@ namespace Filtr
                 AnimaitonHelper.ScaleIn(context, fullIcon);
                 queryType = "Like"; 
                 Live.db.Collection("posts").Document(post.id).Get().AddOnSuccessListener(this);
+
+                DocumentReference docRef = Live.db.Collection("users").Document(post.creator);
+                docRef.Update("newLikes", true);
             }
         }
         public void OnSuccess(Java.Lang.Object result)
@@ -317,7 +320,11 @@ namespace Filtr
             var snapshot = (DocumentSnapshot)result;
 
             JavaList likedBy = (JavaList)snapshot.Get("likedBy");
-
+            
+            //if (queryType.Equals("InformPostOwner"))
+            //{
+                
+            //}
             if (queryType.Equals("Like"))
             {
                 likedBy.Add(Live.user.id);

@@ -18,29 +18,21 @@ namespace Filtr
     [Activity(Label = "LandingPageActivity")]
     public class LandingPageActivity : AppCompatActivity
     {
+        #region setup
         Button btnStart;
         View p;
-        Animation anim;
-        ImageView empty, full;
-        FrameLayout frame;
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
-            SetContentView(Resource.Layout.landing_page);
             p = FindViewById<View>(Resource.Id.landing_page);
+            SetContentView(p);
 
             btnStart = p.FindViewById<Button>(Resource.Id.btnGetStarted);
             btnStart.Click += BtnStart_Click;
-
+            
             SetupFonts();
         }
-        private void BtnStart_Click(object sender, EventArgs e)
-        {
-            Intent it = new Intent(this, typeof(RegisterActivity));
-            it.AddFlags(ActivityFlags.NoAnimation);
-            StartActivity(it);
-        }
-        private void SetupFonts()
+        private void SetupFonts() // setup the fonts for the ui components
         {
             #region Header, Button (Semi-Bold Poppins)
             Typeface tf = Typeface.CreateFromAsset(Assets, "Poppins-SemiBold.ttf");
@@ -57,5 +49,14 @@ namespace Filtr
             #endregion
 
         }
+        #endregion
+
+        #region events
+        private void BtnStart_Click(object sender, EventArgs e) // navigates to registration page 
+        {
+            Intent it = new Intent(this, typeof(RegisterActivity));
+            StartActivity(it);
+        }
+        #endregion
     }
 }
