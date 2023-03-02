@@ -4262,6 +4262,9 @@ namespace Filtr
 			// aapt resource value: 0x7F0800BE
 			public const int mtrl_child_content_container = 2131230910;
 			
+			// aapt resource value: 0x7F0800BE
+			public const int middle = 2131230910;
+			
 			// aapt resource value: 0x7F0800BF
 			public const int mtrl_internal_children_alpha_tag = 2131230911;
 			
@@ -4436,6 +4439,9 @@ namespace Filtr
 			// aapt resource value: 0x7F0800F7
 			public const int showHome = 2131230967;
 			
+			// aapt resource value: 0x7F0800F7
+			public const int shortcut = 2131230967;
+			
 			// aapt resource value: 0x7F0800F8
 			public const int showTitle = 2131230968;
 			
@@ -4504,6 +4510,9 @@ namespace Filtr
 			
 			// aapt resource value: 0x7F08010D
 			public const int tag_accessibility_clickable_spans = 2131230989;
+			
+			// aapt resource value: 0x7F08010D
+			public const int tabMode = 2131230989;
 			
 			// aapt resource value: 0x7F08010E
 			public const int tag_accessibility_heading = 2131230990;

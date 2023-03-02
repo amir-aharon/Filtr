@@ -7,6 +7,7 @@ using Android.Runtime;
 using Android.Views;
 using Android.Widget;
 using Firebase.Firestore;
+using Firebase.Firestore.Auth;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -81,6 +82,11 @@ namespace Filtr
                         QueryUser(context, temp.creator);
                     };
 
+                    tvUser.Click += (object sender, EventArgs e) =>
+                    {
+                        QueryUser(context, temp.creator);
+                    };
+
                     queryType = "SetupHome";
 
                     likeIconsDisplays.Add(fullIcon);
@@ -123,6 +129,11 @@ namespace Filtr
                     {
                         QueryFilter(context, temp.filter);
                     };
+                    tvUser.Click += (object sender, EventArgs e) =>
+                    {
+                        QueryUser(context, temp.creator);
+                    };
+
                     tvUser.Click += (object sender, EventArgs e) =>
                     {
                         QueryUser(context, temp.creator);
@@ -204,6 +215,11 @@ namespace Filtr
                     };
 
                     queryType = "SetupHome";
+
+                    tvUser.Click += (object sender, EventArgs e) =>
+                    {
+                        QueryUser(context, temp.creator);
+                    };
 
                     likeIconsDisplays.Add(fullIcon);
                     Live.db.Collection("posts").Document(temp.id).Get().AddOnSuccessListener(this);
