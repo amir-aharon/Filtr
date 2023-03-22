@@ -14,25 +14,25 @@ namespace Filtr
 {
     public static class NavbarHelper
     {
-        public static void HomeButton(Context ctx)
+        public static void HomeButton(Context ctx) // performs home button intent 
         {
             Intent intent = new Intent(ctx, typeof(HomeActivity));
             intent.AddFlags(ActivityFlags.NoAnimation);
             ctx.StartActivity(intent);
         }
-        public static void SearchButton(Context ctx)
+        public static void SearchButton(Context ctx) // performs search button intent 
         {
             Intent intent = new Intent(ctx, typeof(SearchActivity));
             intent.AddFlags(ActivityFlags.NoAnimation);
             ctx.StartActivity(intent);
         }
-        public static void LikedButton(Context ctx)
+        public static void LikedButton(Context ctx) // performs liked button intent 
         {
             Intent intent = new Intent(ctx, typeof(LikedActvity));
             intent.AddFlags(ActivityFlags.NoAnimation);
             ctx.StartActivity(intent);
         }
-        public static void AccountButton(Context ctx)
+        public static void AccountButton(Context ctx) // performs account button intent 
         {
             Intent intent = new Intent(ctx, typeof(AccountActivity));
             intent.AddFlags(ActivityFlags.NoAnimation);

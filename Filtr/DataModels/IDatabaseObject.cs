@@ -13,6 +13,6 @@ namespace Filtr
 {
     public interface IDatabaseObject
     {
-        public string id { get; }
+        public string id { get; } // identifier string
     }
 }

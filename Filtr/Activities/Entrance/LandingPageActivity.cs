@@ -24,8 +24,8 @@ namespace Filtr
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
+            SetContentView(Resource.Layout.landing_page);
             p = FindViewById<View>(Resource.Id.landing_page);
-            SetContentView(p);
 
             btnStart = p.FindViewById<Button>(Resource.Id.btnGetStarted);
             btnStart.Click += BtnStart_Click;

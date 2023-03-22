@@ -28,7 +28,7 @@ namespace Filtr
         {
             base.OnCreate(savedInstanceState);
             Live.user = null;
-            SetContentView(Resource.Id.login_page);
+            SetContentView(Resource.Layout.login_page);
             ConnectViews();
             SetupFonts();
         }

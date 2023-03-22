@@ -73,11 +73,11 @@
     <Compile Include="Activities\CreatorActivity.cs" />
     <Compile Include="Activities\Main Pages\AccountActivity.cs" />
     <Compile Include="Activities\Main Pages\LikedActivity.cs" />
-    <Compile Include="DataModels\AsciiFilter.cs" />
+    <Compile Include="Filters\AsciiFilter.cs" />
     <Compile Include="DataModels\Filter.cs" />
     <Compile Include="DataModels\IDatabaseObject.cs" />
-    <Compile Include="DataModels\MonochromeFilter.cs" />
-    <Compile Include="DataModels\PixelFilter.cs" />
+    <Compile Include="Filters\MonochromeFilter.cs" />
+    <Compile Include="Filters\PixelFilter.cs" />
     <Compile Include="DataModels\Post.cs" />
     <Compile Include="DataModels\User.cs" />
     <Compile Include="Activities\Main Pages\HomeActivity.cs" />

@@ -28,10 +28,9 @@ namespace Filtr
 
             // connects to the session
             ISharedPreferences sp = GetSharedPreferences("details", Android.Content.FileCreationMode.Private);
-            string id = sp.GetString("id", "");
 
             // if theres a user in the session (aka logged from this device)
-            if (id != "")
+            if (sp.GetString("id", "") != "")
             {
                 // Set live user details
                 Live.user = new User(

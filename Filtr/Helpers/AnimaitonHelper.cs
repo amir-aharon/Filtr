@@ -15,20 +15,30 @@ namespace Filtr
 {
     public static class AnimaitonHelper
     {
-        public static void ScaleIn(Context ctx, View v)
+        public static void ScaleIn(Context ctx, View v) // make like appear 
         {
+            // load xml animation
             var anim = AnimationUtils.LoadAnimation(ctx, Resource.Animation.like_anim);
             
+            // scale the like image to appear
             v.ScaleX = 1;
             v.ScaleY = 1;
+
+            // make it visible
             v.Visibility = ViewStates.Visible;
             
+            // execute animation
             v.StartAnimation(anim);
         }
-        public static void ScaleOut(Context ctx, View v)
+        public static void ScaleOut(Context ctx, View v) // make like disappear 
         {
+            // load xml animation
             var anim = AnimationUtils.LoadAnimation(ctx, Resource.Animation.unlike_anim);
+            
+            // execute animation
             v.StartAnimation(anim);
+
+            // make like image invisible
             v.Visibility=ViewStates.Invisible;
         }
     }

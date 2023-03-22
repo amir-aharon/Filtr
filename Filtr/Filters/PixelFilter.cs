@@ -17,13 +17,13 @@ namespace Filtr
         public string name { get; private set; } // filter's name
         public static Bitmap Apply(Bitmap original)
         {
-            // Create a blank bitmap with the same dimensions as the original
+            // resize input bitmap - compression does all the work for us
             original = ImageHelper.GetResizedBitmap(original, 128, 128);
-            original = ImageHelper.GetResizedBitmap(original, 500, 500);
-            //Bitmap newImg = Bitmap.CreateBitmap(original.Width, original.Height, Bitmap.Config.Argb8888);
 
-            
+            // return the bitmap (which is a pixel matrix) to original size 
+            original = ImageHelper.GetResizedBitmap(original, 500, 500);            
 
+            // return bitmap
             return original;
         }
     }

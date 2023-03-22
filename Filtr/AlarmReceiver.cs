@@ -17,25 +17,31 @@ namespace Filtr
     public class AlarmReceiver : BroadcastReceiver, IOnSuccessListener
     {
         Context context;
-        public override void OnReceive(Context context, Intent intent)
+        public override void OnReceive(Context context, Intent intent) 
         {
+            // set activity context
             this.context = context;
+
+            // check if there's a logged in user from this device
             ISharedPreferences sp = context.GetSharedPreferences("details", Android.Content.FileCreationMode.Private);
             string id = sp.GetString("id", "");
             System.Diagnostics.Debug.WriteLine(id);
+
+            // if there is a logged user, check for new likes
             if (id != "")
                 Live.db.Collection("users").Document(id).Get().AddOnSuccessListener(this);
 
 
         }
-
-        public void OnSuccess(Java.Lang.Object result)
+        public void OnSuccess(Java.Lang.Object result) // executes the query 
         {
+            // process the queried data
             var snapshot = (DocumentSnapshot)result;
             
+            // if there are new likes
             if ((bool)snapshot.Get("newLikes"))
             {
-                #region Notification
+                #region notification
                 Intent i = new Intent(context, typeof(MainActivity));
                 i.PutExtra("key", "new message");
                 PendingIntent pendingIntent = PendingIntent.GetActivity(context, 0, i, 0);
@@ -47,7 +53,6 @@ namespace Filtr
                 var nm = (NotificationManager)context.GetSystemService(Context.NotificationService);
                 notificationBuilder.SetContentIntent(pendingIntent);
 
-                //Build.VERSION_CODES.O - is a reference to API level 26 (Android Oreo which is Android 8)if (Build.VERSION.SdkInt >= BuildVersionCodes.O)
                 {
                     NotificationChannel notificationChannel = new NotificationChannel("abcd", "NAME", NotificationImportance.High);
                     notificationBuilder.SetChannelId("abcd");
@@ -56,6 +61,7 @@ namespace Filtr
                 nm.Notify(1, notificationBuilder.Build());
                 #endregion
 
+                // update newLikes field to false
                 DocumentReference docRef = Live.db.Collection("users").Document(snapshot.Id);
                 docRef.Update("newLikes", false);
             }

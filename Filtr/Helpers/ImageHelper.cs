@@ -7,7 +7,7 @@ namespace Filtr
 {
     public class ImageHelper
     {
-        public static string BitmapToBase64(Bitmap bitmap)
+        public static string BitmapToBase64(Bitmap bitmap) // gets bitmap -> returns Base64 string 
         {
             string str = "";
             using (var stream = new MemoryStream())
@@ -18,12 +18,12 @@ namespace Filtr
             }
             return str;
         }
-        public static Bitmap Base64ToBitmap(string base64String)
+        public static Bitmap Base64ToBitmap(string base64String) // gets Base64 string -> returns bitmap 
         {
             byte[] imageAsBytes = Base64.Decode(base64String, Base64Flags.Default);
             return BitmapFactory.DecodeByteArray(imageAsBytes, 0, imageAsBytes.Length);
         }
-        public static Bitmap CropToSquare(Bitmap bitmap)
+        public static Bitmap CropToSquare(Bitmap bitmap) // gets bitmap -> returns bitmap in 1:1 ratio (cropped) 
         {
             int width = bitmap.Width;
             int height = bitmap.Height;
@@ -37,7 +37,7 @@ namespace Filtr
 
             return cropImg;
         }
-        public static Bitmap GetResizedBitmap(Bitmap image, int newHeight, int newWidth)
+        public static Bitmap GetResizedBitmap(Bitmap image, int newHeight, int newWidth) // gets bitmap and dimensions -> return the bitmap in these dimensions 
         {
             int width = image.Width;
             int height = image.Height;

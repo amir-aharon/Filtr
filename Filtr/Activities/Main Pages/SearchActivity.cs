@@ -38,24 +38,29 @@ namespace Filtr
 
             btnSearch = (FlexboxLayout)p.FindViewById(Resource.Id.btnSearch);
 
+
+            // prepare listview for later use
             lv = (ListView)p.FindViewById(Resource.Id.lv);
             lv.Visibility = ViewStates.Invisible;
 
             btnSearch.Click += OnSearch;
 
+            // check if there's a need to show search results
             bool isFilterQueried = Intent.GetBooleanExtra("isFilterQueried", false);
             bool isUserQueried = Intent.GetBooleanExtra("isUserQueried", false);
             bool isQuery = Intent.GetBooleanExtra("isQuery", false);
             Query q;
 
+            // if there was a query
             if (isQuery)
             {
-
+                // check if it was for a filter
                 if (isFilterQueried)
                 {
                     queryType = "Filters";
                     Live.db.Collection("posts").WhereEqualTo("filter", Intent.GetStringExtra("filtersQuery")).Get().AddOnSuccessListener(this);
                 }
+                // check if it was for a user
                 else if (isUserQueried)
                 {
                     queryType = "Users";

@@ -16,6 +16,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading;
+using System.Threading.Tasks;
 
 namespace Filtr
 {
@@ -23,6 +24,7 @@ namespace Filtr
     public class CreatorActivity : Activity
     {
         #region setup
+        ProgressBar loadingSign;
         Bitmap original, applied;
         private string appliedFilter;
         View p;
@@ -54,7 +56,7 @@ namespace Filtr
                     Intent = new Intent(MediaStore.ActionImageCapture);
                     StartActivityForResult(Intent, CAMERA);
                 }
-                if (action == "gallery") // gallery intent action
+                else if (action == "gallery") // gallery intent action
                 {
                     Intent = new Intent();
                     Intent.SetType("image/*");
@@ -77,6 +79,9 @@ namespace Filtr
             btnNoFilter = p.FindViewById<Button>(Resource.Id.btnNoFilter);
             btnPixelFilter = p.FindViewById<Button>(Resource.Id.btnPixelFilter);
             btnAsciiFilter = p.FindViewById<Button>(Resource.Id.btnAsciiFilter);
+
+            loadingSign = p.FindViewById<ProgressBar>(Resource.Id.loadingSign);
+            loadingSign.Visibility = ViewStates.Visible;
 
             btnExit.Click += ExitPage;
             btnNoFilter.Click += NoFilter;
@@ -170,16 +175,17 @@ namespace Filtr
             // update image's #
             appliedFilter = "nofilter";
         }
-        private void MonochromeFilter(object sender, EventArgs e) // applies monochrome filter 
+        private async void MonochromeFilter(object sender, EventArgs e) // applies monochrome filter 
         {
             // check if there isn't any cached monochrome image
             if ((Bitmap)filteredImages.Get("mono") == null)
             {
                 // appliy the filter (algorithm)
-                Bitmap bm = Filtr.MonochromeFilter.Apply((Bitmap)filteredImages.Get("original"), 500, 500);
+                Bitmap bm = await Filtr.MonochromeFilter.Apply((Bitmap)filteredImages.Get("original"), 500, 500, loadingSign);
                 
                 // save to cache
                 filteredImages.Put("mono", bm);
+                //loadingSign.Visibility = ViewStates.Invisible;
             }
 
             // get monochrome image from cache
@@ -190,6 +196,8 @@ namespace Filtr
 
             // update image's #
             appliedFilter = "monochrome";
+
+            loadingSign.Visibility = ViewStates.Invisible;
         }
         private void PixelFilter(object sender, EventArgs e) // applies pixel filter
         {
@@ -212,13 +220,19 @@ namespace Filtr
             // update image's #
             appliedFilter = "pixelate";
         }
-        private void AsciiFilter(object sender, EventArgs e) // applies ascii filter
+        private async Task TurnLoad()
         {
+            loadingSign.Visibility = ViewStates.Visible;
+            return;
+        }
+        private async void AsciiFilter(object sender, EventArgs e) // applies ascii filter
+        {
+            await TurnLoad();
             // check if there isn't any cached pixel image
             if ((Bitmap)filteredImages.Get("ascii") == null)
             {
                 // appliy the filter (algorithm)
-                Bitmap bm = Filtr.AsciiFilter.Apply((Bitmap)filteredImages.Get("original"), this);
+                Bitmap bm = await Filtr.AsciiFilter.Apply((Bitmap)filteredImages.Get("original"), this, loadingSign);
 
                 // save to cache
                 filteredImages.Put("ascii", bm);
@@ -232,6 +246,7 @@ namespace Filtr
 
             // update image's #
             appliedFilter = "ascii";
+            loadingSign.Visibility= ViewStates.Invisible;
         }
         #endregion
     }

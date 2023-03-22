@@ -18,8 +18,8 @@ namespace Filtr
         public string Lname { get; private set; } // user's last name
         public string password { get; private set; } // user's password
         public string email { get; private set; } // user's email address
-        public bool newLikes {get; private set;}
-        public User (string id, string email, string password, string Fname, string Lname, bool newLikes)
+        public bool newLikes {get; private set;} // flag for when a user had new likes since last time in app
+        public User (string id, string email, string password, string Fname, string Lname, bool newLikes) // constructor
         {
             this.id = id;
             this.email = email;
@@ -27,6 +27,6 @@ namespace Filtr
             this.Fname = Fname;
             this.Lname = Lname;
             this.newLikes = newLikes;
-        } // full constructor
+        }
     }
 }

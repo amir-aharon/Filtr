@@ -15,8 +15,8 @@ namespace Filtr
 {
     public static class Live
     {
-        public static FirebaseFirestore db;
-        public static User user;
+        public static FirebaseFirestore db; // static connection for app's DB
+        public static User user; // static info about the logged user
         public static Bitmap editedBitmap;
     }
 }
