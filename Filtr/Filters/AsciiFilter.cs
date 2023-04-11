@@ -16,9 +16,8 @@ namespace Filtr
     public class AsciiFilter : Filter
     {
         public string name { get; private set; } // filter's name
-        public static async Task<Bitmap> Apply(Bitmap original, Context ctx, ProgressBar ls)
+        public static Bitmap Apply(Bitmap original, Context ctx)
         {
-            ls.Visibility = ViewStates.Visible;
             // string of characters which present levels of intensity
             string CHARACTERS = " .:-=+*#%@";
             
@@ -29,7 +28,7 @@ namespace Filtr
             original = ImageHelper.GetResizedBitmap(original, w, h);
 
             // apply monochrome filter
-            original = await MonochromeFilter.Apply(original, w, h, ls);
+            original = MonochromeFilter.Apply(original, w, h);
 
             // create representing array of strings - each string is a line in the assci image
             string[] asciiImg = new string[h];

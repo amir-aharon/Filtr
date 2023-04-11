@@ -24,7 +24,6 @@ namespace Filtr
     public class CreatorActivity : Activity
     {
         #region setup
-        ProgressBar loadingSign;
         Bitmap original, applied;
         private string appliedFilter;
         View p;
@@ -44,7 +43,7 @@ namespace Filtr
             filteredImages = new HashMap();
 
             // set original image in cache
-            filteredImages.Put("original", Live.editedBitmap);
+            filteredImages.Put("original", null);
 
             // check for action
             string action = Intent.GetStringExtra("action");
@@ -80,8 +79,6 @@ namespace Filtr
             btnPixelFilter = p.FindViewById<Button>(Resource.Id.btnPixelFilter);
             btnAsciiFilter = p.FindViewById<Button>(Resource.Id.btnAsciiFilter);
 
-            loadingSign = p.FindViewById<ProgressBar>(Resource.Id.loadingSign);
-            loadingSign.Visibility = ViewStates.Visible;
 
             btnExit.Click += ExitPage;
             btnNoFilter.Click += NoFilter;
@@ -100,6 +97,12 @@ namespace Filtr
         }
         protected override void OnActivityResult(int requestCode, Result resultCode, Intent data) // extracts and processes image from intent 
         {
+            if (resultCode == Result.Canceled)
+            {
+                // Handle the case when the user pressed the back button
+                Finish();
+                return;
+            }
             if (resultCode != Result.Ok || data == null) return; // check for success
             if (requestCode == GALLERY) // gallery action
             {
@@ -114,7 +117,9 @@ namespace Filtr
                 original = (Bitmap)data.Extras.Get("data");
             }
             else
-                return; // unknown intent
+                return; // unknown intent 
+
+            if (original == null) Finish();
 
             // crop image to square and normalize quality
             ImageHelper.CropToSquare(original);
@@ -124,7 +129,9 @@ namespace Filtr
             filteredImages.Put("original", applied);
 
             // display image
-            ivContainer.SetImageBitmap(original);
+            ivContainer.SetImageBitmap(applied);
+
+            if (applied.Width == 0 || applied.Height == 0) Finish();
 
             // will appear if the image will be posted
             appliedFilter = "NoFilter";
@@ -175,13 +182,13 @@ namespace Filtr
             // update image's #
             appliedFilter = "nofilter";
         }
-        private async void MonochromeFilter(object sender, EventArgs e) // applies monochrome filter 
+        private void MonochromeFilter(object sender, EventArgs e) // applies monochrome filter 
         {
             // check if there isn't any cached monochrome image
             if ((Bitmap)filteredImages.Get("mono") == null)
             {
                 // appliy the filter (algorithm)
-                Bitmap bm = await Filtr.MonochromeFilter.Apply((Bitmap)filteredImages.Get("original"), 500, 500, loadingSign);
+                Bitmap bm = Filtr.MonochromeFilter.Apply((Bitmap)filteredImages.Get("original"), 500, 500);
                 
                 // save to cache
                 filteredImages.Put("mono", bm);
@@ -196,8 +203,6 @@ namespace Filtr
 
             // update image's #
             appliedFilter = "monochrome";
-
-            loadingSign.Visibility = ViewStates.Invisible;
         }
         private void PixelFilter(object sender, EventArgs e) // applies pixel filter
         {
@@ -220,19 +225,13 @@ namespace Filtr
             // update image's #
             appliedFilter = "pixelate";
         }
-        private async Task TurnLoad()
+        private void AsciiFilter(object sender, EventArgs e) // applies ascii filter
         {
-            loadingSign.Visibility = ViewStates.Visible;
-            return;
-        }
-        private async void AsciiFilter(object sender, EventArgs e) // applies ascii filter
-        {
-            await TurnLoad();
             // check if there isn't any cached pixel image
             if ((Bitmap)filteredImages.Get("ascii") == null)
             {
                 // appliy the filter (algorithm)
-                Bitmap bm = await Filtr.AsciiFilter.Apply((Bitmap)filteredImages.Get("original"), this, loadingSign);
+                Bitmap bm = Filtr.AsciiFilter.Apply((Bitmap)filteredImages.Get("original"), this);
 
                 // save to cache
                 filteredImages.Put("ascii", bm);
@@ -246,7 +245,6 @@ namespace Filtr
 
             // update image's #
             appliedFilter = "ascii";
-            loadingSign.Visibility= ViewStates.Invisible;
         }
         #endregion
     }

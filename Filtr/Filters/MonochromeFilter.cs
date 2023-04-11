@@ -17,9 +17,8 @@ namespace Filtr
     public class MonochromeFilter : Filter
     {
         public static string name = "Mono"; // filter's name
-        public static async Task<Bitmap> Apply(Bitmap original, int w, int h, ProgressBar ls)
+        public static Bitmap Apply(Bitmap original, int w, int h)
         {
-            ls.Visibility = ViewStates.Visible;
             int gray = 0;
             ColorObject color = null;
             Color newColor = Color.Argb(255, 0, 0, 0);

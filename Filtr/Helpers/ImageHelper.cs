@@ -34,11 +34,12 @@ namespace Filtr
             int cropH = (height - width) / 2;
             cropH = (cropH < 0) ? 0 : cropH;
             Bitmap cropImg = Bitmap.CreateBitmap(bitmap, cropW, cropH, newWidth, newHeight);
-
+            if (width == 0 || height == 0) return null;
             return cropImg;
         }
         public static Bitmap GetResizedBitmap(Bitmap image, int newHeight, int newWidth) // gets bitmap and dimensions -> return the bitmap in these dimensions 
         {
+            if (image == null) return null;
             int width = image.Width;
             int height = image.Height;
             float scaleWidth = ((float)newWidth) / width;
